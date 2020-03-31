@@ -1,7 +1,7 @@
 var config = {
     type: Phaser.AUTO,
     width: 750,
-    height: 500,
+    height: 550,
     physics: {
         default: 'arcade',
         arcade: {
@@ -23,6 +23,9 @@ var player;
 var cursor;
 
 var coins;
+
+var score = 0;
+var scoreText;
 
 var game = new Phaser.Game(config);
 
@@ -88,18 +91,7 @@ function create() {
                 platforms.create(x + 12.5, y + 12.5, 'block');
             }
 
-            else if (tile === 3) {
-                coins = this.physics.add.sprite(x + 12.5, y + 12.5, 'coin');
-                this.anims.create({
-                    key: 'gira-gira',
-                    frames: this.anims.generateFrameNumbers('coin', {start:0, end: 9}),
-                    frameRate: 10,
-                    repeat: -1
-                });
-            }
-
             else if (tile === 2) {
-                //   player = this.physics.add.image(x-12.5, y+37.5, 'part')
                 player = this.physics.add.sprite(x + 12.5, y + 12.5, 'player');
                 player.setBounce(1);
                 player.setCollideWorldBounds(true);
@@ -134,17 +126,30 @@ function create() {
                     frameRate: 10,
                     repeat: -1
                 });
+            }
 
-                //criar colisao entre o objeto player e o objeto platforms
-                this.physics.add.collider(player, platforms);
-
-
-                //preenche o objeto de cursores com 4 propriedades: up, down, left, right
-                cursors = this.input.keyboard.createCursorKeys();
+            else if (tile === 3) {
+                coins = this.physics.add.sprite(x + 12.5, y + 12.5, 'coin');
+                this.anims.create({
+                key: 'gira-gira',
+                frames: this.anims.generateFrameNumbers('coin', {start:0, end: 9}),
+                frameRate: 10,
+                repeat: -1,
+            });
             }
         }
-
     }
+
+    scoreText = this.add.text(25, 500, 'Score: 0', { fontSize: '20px', fill: '#ffa' });
+
+    //criar colisao entre o objeto player e o objeto platforms
+    this.physics.add.collider(player, platforms);
+
+    //preenche o objeto de cursores com 4 propriedades: up, down, left, right
+    cursors = this.input.keyboard.createCursorKeys();
+    
+    //criar cloisão entre coins e player
+    this.physics.add.overlap(player, coins, pegaMoeda, null, this);
 }
 
 
@@ -153,6 +158,7 @@ function update() {
     if (coins.setVelocityX(0) && coins.setVelocityY(0)){
         coins.anims.play('gira-gira', true);
     }
+
 
     player.setVelocityX(0);
     player.setVelocityY(0);
@@ -183,4 +189,12 @@ function update() {
     }
 
     
+}
+
+function pegaMoeda(player, coin)
+{
+    coin.disableBody(true,true);
+
+    score += 10;
+    scoreText.setText('Score: ' + score);
 }
