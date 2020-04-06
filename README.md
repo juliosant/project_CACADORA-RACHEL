@@ -72,4 +72,4 @@ Haverá moedas/estrelas no caminho que somam pontuação. Onde uma quantidade pr
 
 ## Protótipos de Tela
 
-![](LABIRINTOP\assets\Diagrama.png)
+![](assets\Diagrama.png)
