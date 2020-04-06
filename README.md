@@ -68,8 +68,11 @@ Haverá moedas/estrelas no caminho que somam pontuação. Onde uma quantidade pr
 #### Personas
 
 1. **Usuário 1** - usuário com acesso a um navegador web, que gosta de jogar games no computador desktop.
+
 2. **Usuário 2** - usuário com acesso a um navegador web, que gosta de jogar games no dispositivo móvel.
+
+   
 
 ## Protótipos de Tela
 
-![](C:\xampp\htdocs\LABIRINTOP\assets\Diagrama.png)
+![Diagrama](assets\Diagrama.png)
