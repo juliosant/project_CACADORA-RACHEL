@@ -2,6 +2,8 @@ class LoadScene extends Phaser.Scene {
     preload() {
 
         this.load.image('bg', 'assets/bg.png');
+        this.load.image('bg-control', 'assets/bg-control.png');
+        this.load.image('bg-button', 'assets/bg-button.png');
         this.load.image('block', 'assets/block.png');
 
         /*this.load.image('up', 'assets/block.png');
@@ -12,6 +14,7 @@ class LoadScene extends Phaser.Scene {
         this.load.image('end', 'assets/end.png');
         this.load.image('part', 'assets/part.png');
         this.load.image('progressbar', 'assets/progressbar.png');
+        
 
 
         this.load.spritesheet('player', 'assets/player.png', { frameWidth: 20, frameHeight: 20 });
