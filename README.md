@@ -75,8 +75,4 @@ Haverá moedas/estrelas no caminho que somam pontuação. Onde uma quantidade pr
 
 ## Protótipos de Tela
 
-<<<<<<< HEAD
-![Diagrama](assets\Diagrama.png)
-=======
 ![](assets\Diagrama.png)
->>>>>>> a94fbd716292c807e5de3095f328a77f724e2e9f
