@@ -75,4 +75,4 @@ Haverá moedas/estrelas no caminho que somam pontuação. Onde uma quantidade pr
 
 ## Protótipos de Tela
 
-![](assets\Diagrama.png)
+![Fluxograma](Fluxograma.png)
