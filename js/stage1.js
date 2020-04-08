@@ -21,6 +21,7 @@ class Stage1 extends Phaser.Scene {
            */
 
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            
             [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
             [0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
             [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
@@ -53,12 +54,14 @@ class Stage1 extends Phaser.Scene {
 
                 //::::::::::::::::::::::::::::::CRIANDO BLOCOS::::::::::::::::::::::::::::::
                 if (this.tile === 1) {
+                    
                     this.platforms.create(x + 12.5, y + 12.5, 'block');
                 }
 
                 //::::::::::::::::::::::::::::::CRIANDO PLAYER::::::::::::::::::::::::::::::
                 else if (this.tile === 2) {
                     this.player = this.physics.add.sprite(x + 12.5, y + 12.5, 'player');
+                    this.player.setTint(0xcccccc);
                     //:::::::::::::::::::::::::::::::::::::::::::
 
                     //:::::::::::::::::::::::::::::::::::::::::::
@@ -68,14 +71,14 @@ class Stage1 extends Phaser.Scene {
                     //animar para a esquerda
                     this.anims.create({
                         key: 'left',
-                        frames: this.anims.generateFrameNumbers('player', { start: 16, end: 23 }),
+                        frames: this.anims.generateFrameNumbers('player', { start: 17, end: 23 }),
                         frameRate: 10,
                         repeat: -1
                     });
                     //animar para a direita
                     this.anims.create({
                         key: 'right',
-                        frames: this.anims.generateFrameNumbers('player', { start: 24, end: 31 }),
+                        frames: this.anims.generateFrameNumbers('player', { start: 9, end: 15 }),
                         frameRate: 10,
                         repeat: -1
 
@@ -83,7 +86,7 @@ class Stage1 extends Phaser.Scene {
                     //animar para a cima
                     this.anims.create({
                         key: 'up',
-                        frames: this.anims.generateFrameNumbers('player', { start: 8, end: 15 }),
+                        frames: this.anims.generateFrameNumbers('player', { start: 25, end: 31 }),
                         frameRate: 10,
                         repeat: -1
 
@@ -91,7 +94,7 @@ class Stage1 extends Phaser.Scene {
                     //animar para a baixo
                     this.anims.create({
                         key: 'down',
-                        frames: this.anims.generateFrameNumbers('player', { start: 0, end: 7 }),
+                        frames: this.anims.generateFrameNumbers('player', { start: 1, end: 7 }),
                         frameRate: 10,
                         repeat: -1
                     });
@@ -114,6 +117,7 @@ class Stage1 extends Phaser.Scene {
                 else if (this.tile === 4) {
                     this.enemy = this.physics.add.sprite(x + 12.5, y + 12.5, 'enemy');
                     this.enemy.setCollideWorldBounds(true);
+
                     this.anims.create({
                         key: 'goLeft',
                         frames: this.anims.generateFrameNumbers('enemy', { start: 16, end: 23 }),
@@ -122,13 +126,13 @@ class Stage1 extends Phaser.Scene {
                     });
                     this.anims.create({
                         key: 'goRight',
-                        frames: this.anims.generateFrameNumbers('enemy', { start: 24, end: 31 }),
+                        frames: this.anims.generateFrameNumbers('enemy', { start: 8, end: 15 }),
                         frameRate: 10,
                         repeat: -1
                     });
                     this.anims.create({
                         key: 'goUp',
-                        frames: this.anims.generateFrameNumbers('enemy', { start: 8, end: 15 }),
+                        frames: this.anims.generateFrameNumbers('enemy', { start: 24, end: 31 }),
                         frameRate: 10,
                         repeat: -1
                     });
@@ -170,11 +174,11 @@ class Stage1 extends Phaser.Scene {
         this.downBtn = this.add.image(375, 512.5, 'down').setScrollFactor(0).setInteractive();*/
 
          this.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
-                     x: 100,
+                     x: 90,
                      y: 275,
                      radius: 50,
-                     base: this.add.circle(0, 0, 75, 0x888888),
-                     thumb: this.add.circle(0, 0, 37.5, 0xcccccc),
+                     base: this.add.circle(0, 0, 75, 0xc7bf97),
+                     thumb: this.add.circle(0, 0, 37.5, 0xfff3c9),
                      // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
                      // forceMin: 16,
                      // enable: true

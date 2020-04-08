@@ -16,6 +16,18 @@ body{
     src: url('emulogic.ttf');
 }
 
+.button{
+    position: absolute;
+    top: 12%;
+    left:92%;  
+    padding: 4px;
+
+    border-radius: 10px;
+    background-color: rgb(250, 238, 215);
+    border: 4px double rgb(199,191,151);
+    color: rgb(87, 7, 60);
+}
+
 .hidden{
 	font-family: emulogic;
 	visibility: hidden;

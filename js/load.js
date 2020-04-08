@@ -17,8 +17,8 @@ class LoadScene extends Phaser.Scene {
         
 
 
-        this.load.spritesheet('player', 'assets/player.png', { frameWidth: 20, frameHeight: 20 });
-        this.load.spritesheet('enemy', 'assets/enemy.png', { frameWidth: 20, frameHeight: 20 });
+        this.load.spritesheet('player', 'assets/player.png', { frameWidth: 20, frameHeight: 25 });
+        this.load.spritesheet('enemy', 'assets/enemy.png', { frameWidth: 20, frameHeight: 25 });
         this.load.spritesheet('coin', 'assets/coin.png', { frameWidth: 25, frameHeight: 25 });
 
         var url;
