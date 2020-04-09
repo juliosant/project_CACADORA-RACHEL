@@ -28,6 +28,6 @@ class LoadScene extends Phaser.Scene {
         
     }
     create(){
-        this.scene.add('stage1', Stage1, true);
+        this.scene.start('menu');
     }
 }

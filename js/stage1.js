@@ -1,9 +1,8 @@
-var moviment;
-var angle;
-var force;
+
+
 class Stage1 extends Phaser.Scene {
 
-
+    
     create() {
 
         this.add.image(175/2,275, 'bg-control');
@@ -20,8 +19,7 @@ class Stage1 extends Phaser.Scene {
                5: local onde estará a arma de Rachel
            */
 
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            
+            [],
             [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
             [0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
             [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
@@ -347,3 +345,7 @@ class Stage1 extends Phaser.Scene {
         this.scoreText.setText('Score: ' + this.score);
     }
 }
+
+var moviment;
+var angle;
+var force;

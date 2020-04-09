@@ -1,30 +1,15 @@
 class BootScene extends Phaser.Scene {
+    create(){
+        this.scene.add('boot', BootScene);
+        this.scene.add('load', LoadScene);
+        this.scene.add('menu', MenuScene);
+        this.scene.add('stage1', Stage1);
+        this.scene.add('credits', CreditsScene);
+        this.scene.add('option', OptionScene);
 
-    create() {
-    
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        this.nameGame = this.add.text(512, 150, 'RACHEL HUNTER', {font: '32px emulogic', fill: '#ffa'});
-        this.nameGame.setOrigin(0.5);
-
-        this.textoInicial = this.add.text(512, 300, 'PRESSIONE ENTER', {font: '15px emulogic', fill: '#ffa'});
-        this.textoInicial.setOrigin(0.5);
-        
-        //Para Desktop
-        this.input.keyboard.on('keydown_ENTER', function () {
-            
-            this.scene.add('load', LoadScene, true);
-
-        }, this);
-
-        //Para Mobile
-        this.input.once('pointerdown', function () {
-        
-            this.scene.add('load', LoadScene, true);
-
-        }, this);
-        
+        this.scene.start('load');
     }
-
+    
 }
 
 var config = {
