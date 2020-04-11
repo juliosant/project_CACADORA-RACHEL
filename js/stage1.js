@@ -1,13 +1,11 @@
-
-
 class Stage1 extends Phaser.Scene {
 
-    
+
     create() {
 
-        this.add.image(175/2,275, 'bg-control');
-        this.add.image(975 ,275, 'bg-button');
-        this.add.image(550, 275, 'bg');
+        this.add.image(150 / 2, 275, 'bg-control');
+        this.add.image(962.5, 275, 'bg-button');
+        this.add.image(525, 275, 'bg');
 
         this.maze = [
 
@@ -15,31 +13,31 @@ class Stage1 extends Phaser.Scene {
             /*  1: local onde ficará os blocos
                2: Local onde Rachel começará a fase
                3: local onde estará as moedas.
-               4: Local onde Rachel encerrará a fase.
+               4: Local inicial do inimigo.
                5: local onde estará a arma de Rachel
            */
 
             [],
-            [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
-            [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
-            [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
-            [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-            [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1],
-            [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
-            [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
-            [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1],
-            [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1],
-            [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1],
-            [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1],
-            [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 4, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1],
-            [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 3, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1],
-            [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1],
-            [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1],
-            [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1],
-            [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+            [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 5, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+            [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1],
+            [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1],
+            [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 4, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 3, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
         ]
         this.platforms = this.physics.add.staticGroup();
 
@@ -52,7 +50,7 @@ class Stage1 extends Phaser.Scene {
 
                 //::::::::::::::::::::::::::::::CRIANDO BLOCOS::::::::::::::::::::::::::::::
                 if (this.tile === 1) {
-                    
+
                     this.platforms.create(x + 12.5, y + 12.5, 'block');
                 }
 
@@ -99,6 +97,7 @@ class Stage1 extends Phaser.Scene {
 
                 }
 
+
                 //::::::::::::::::::::::::::::::CRIANDO MOEDA::::::::::::::::::::::::::::::
                 else if (this.tile === 3) {
                     this.coins = this.physics.add.sprite(x + 12.5, y + 12.5, 'coin');
@@ -142,72 +141,98 @@ class Stage1 extends Phaser.Scene {
                     });
                     this.enemy.direction = "DOWN";
                 }
+
+                else if(this.tile === 5){
+                    this.weapon = this.physics.add.image(x+12.5, y+12.5, 'weapon');
+                }
                 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
                 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
             }
         }
 
-        //TEXTO DE HP E VIDA
+
+
+        //:::::::::::::::::::::::::::::BOTÃO DE TIRO:::::::::::::::::::::::::::::
+        this.button = this.add.image(962.5, 250, 'button').setInteractive();
+        this.button.setVisible(false);
+        this.bullets = new Bullets(this);
+
+        this.button.on('pointerdown', function (pointer) {
+            this.button.setTintFill(0xc7bf97, 0xfff3c9, 0xc7bf97);
+            this.bullets.fireBullet(this.player.x, this.player.y);
+            this.menosBalas(this.button);
+        }, this);
+
+        this.button.on('pointerup', function (pointer) {
+            this.button.clearTint();
+        }, this);
+        
+        
+
+        //:::::::::::::::::::::::::::::ADD MOVIMENTAÇÃO:::::::::::::::::::::::::::::
+        this.cursors = this.input.keyboard.createCursorKeys();
+
+        this.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
+            x: 90,
+            y: 275,
+            radius: 50,
+            base: this.add.circle(0, 0, 50, 0xc7bf97),
+            thumb: this.add.circle(0, 0, 25, 0xfff3c9),
+            // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
+            // forceMin: 16,
+            // enable: true
+        })
+            .on('update', this.dumpJoyStickState, this);
+
+        this.text = this.add.text(0, 0);
+        this.dumpJoyStickState();
+
+
+        //TEXTO DE HP, VIDA E MUNIÇÂO
         this.score = 0;
         this.scoreText = this.add.text(225, 10, 'Score: ' + this.score, { font: '12px emulogic', fill: '#ffa' });
+        
         this.hp = 200;
         this.hpText = this.add.text(450, 10, 'Hp: ' + this.hp, { font: '12px emulogic', fill: '#ffa' });
-
+        
+        this.amunitionBullet = 6;
+        this.amunitionBulletText = this.add.text(675, 10, 'Amunition: ' + this.amunitionBullet, { font: '12px emulogic', fill: '#ffa' });
+        this.amunitionBulletText.setVisible(false);
         //COLISÕES
         this.physics.add.collider(this.player, this.platforms);
         this.physics.add.collider(this.enemy, this.platforms)
         this.physics.add.overlap(this.player, this.coins, this.pegaMoeda, null, this);
         this.physics.add.overlap(this.player, this.enemy, this.tomaDano, null, this);
-
-        //ADD MOVIMENTAÇÃO
-        this.cursors = this.input.keyboard.createCursorKeys();
-
-        //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        /*this.input.addPointer(1000);
+        this.physics.add.overlap(this.player, this.weapon, this.pegaArma, null, this);
+        this.physics.add.overlap(this.bullets, this.enemy, this.tiroAcertado, null, this);
+    }
 
 
-        this.leftBtn = this.add.image(600, 512.5, 'left').setScrollFactor(0).setInteractive();
-        this.rightBtn = this.add.image(525, 512.5, 'right').setScrollFactor(0).setInteractive();
-        this.upBtn = this.add.image(450, 512.5, 'up').setScrollFactor(0).setInteractive();
-        this.downBtn = this.add.image(375, 512.5, 'down').setScrollFactor(0).setInteractive();*/
+    dumpJoyStickState() {
+        var cursorKeys = this.joyStick.createCursorKeys();
+        var s = /*'Key down: '*/'';
+        for (var name in cursorKeys) {
+            if (cursorKeys[name].isDown) {
+                //s += name + ' ';
+                moviment = name;
+            }
+        }
+        force = Math.floor(this.joyStick.force * 100) / 100;
+        angle = Math.floor(this.joyStick.angle * 100) / 100;
+        // s += '\n';
+        //s += ('Force: ' + force + '\n');
+        //s += ('Angle: ' + angle + '\n');
 
-         this.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
-                     x: 90,
-                     y: 275,
-                     radius: 50,
-                     base: this.add.circle(0, 0, 75, 0xc7bf97),
-                     thumb: this.add.circle(0, 0, 37.5, 0xfff3c9),
-                     // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
-                     // forceMin: 16,
-                     // enable: true
-                 })
-                 .on('update', this.dumpJoyStickState, this);
-     
-             this.text = this.add.text(0, 0);
-             this.dumpJoyStickState();
-         }
-     
-         dumpJoyStickState() {
-             var cursorKeys = this.joyStick.createCursorKeys();
-             var s = /*'Key down: '*/'';
-             for (var name in cursorKeys) {
-                 if (cursorKeys[name].isDown) {
-                     //s += name + ' ';
-                     moviment = name;
-                 }
-             }
-             force =  Math.floor(this.joyStick.force * 100) / 100;
-             angle = Math.floor(this.joyStick.angle * 100) / 100;
-            // s += '\n';
-             //s += ('Force: ' + force + '\n');
-            //s += ('Angle: ' + angle + '\n');
+        if (force === 0 && angle === 0) {
+            moviment = null;
+        }
+        this.text.setText(s);
 
-             if (force ===0 && angle === 0){
-                 moviment = null;
-             }
-             this.text.setText(s);
+
+        //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     }
+
 
 
     update() {
@@ -263,7 +288,7 @@ class Stage1 extends Phaser.Scene {
         this.player.setVelocityY(0);
 
         if (this.cursors.left.isDown && !this.cursors.right.isDown || moviment === 'left') {
-        
+
             this.goLeft();
         }
         else if (this.cursors.right.isDown && !this.cursors.left.isDown || moviment === 'right') {
@@ -280,28 +305,11 @@ class Stage1 extends Phaser.Scene {
             this.player.anims.stop('up', true);
 
         }
-        else if(force === 0 && angle === 0){
+        else if (force === 0 && angle === 0) {
             this.player.setVelocityX(0);
             this.player.setVelocityY(0);
             this.player.anims.stop('up', true);
         }
-
-
-     /*   this.leftBtn.once('pointerdown', function () {
-            this.goLeft();
-        }, this);
-
-        this.rightBtn.once('pointerdown', function () {
-            this.goRight();
-        }, this);
-
-        this.upBtn.once('pointerdown', function () {
-            this.goUp();
-        }, this);
-
-        this.downBtn.once('pointerdown', function () {
-            this.goDown();
-        }, this);*/
 
     }
 
@@ -309,25 +317,28 @@ class Stage1 extends Phaser.Scene {
     goLeft() {
         this.player.setVelocityX(-80);
         this.player.anims.play('left', true);
+        movimentBullet = 'left';
     }
     goRight() {
         this.player.setVelocityX(80);
         this.player.anims.play('right', true);
+        movimentBullet = 'right';
     }
     goUp() {
         this.player.setVelocityY(-80);
         this.player.anims.play('up', true);
+        movimentBullet = 'up';
     }
     goDown() {
         this.player.setVelocityY(80);
         this.player.anims.play('down', true);
+        movimentBullet = 'down';
     }
 
     //VARIAÇÃO DE DANO
     tomaDano(player, enemy) {
         this.hp -= 1;
         this.hpText.setText('Hp: ' + this.hp);
-
 
         if (this.hp === 0) {
             this.physics.pause();
@@ -344,8 +355,85 @@ class Stage1 extends Phaser.Scene {
         this.score += 10;
         this.scoreText.setText('Score: ' + this.score);
     }
+
+    pegaArma(player, weapon){
+        weapon.disableBody(true, true);
+        this.button.setVisible(true);
+        this.amunitionBulletText.setVisible(true);
+    }
+
+    tiroAcertado(enemy, bullet){
+        enemy.disableBody(true, true);
+        bullet.disableBody(true, true);
+        bullet.setActive(true);
+
+        this.score += 20;
+        this.scoreText.setText('Score: ' + this.score)
+    }
+
+    menosBalas(button) {
+        this.amunitionBullet -= 1;
+        this.amunitionBulletText.setText('Amunition: ' + this.amunitionBullet);
+
+        if(this.amunitionBullet === 0){
+            button.setVisible(false);
+            this.amunitionBulletText.setVisible(false);
+
+        }
+    }
 }
 
 var moviment;
 var angle;
 var force;
+var movimentBullet = 'down';
+
+class Bullet extends Phaser.Physics.Arcade.Sprite {
+    constructor(scene, x, y) {
+        super(scene, x, y, 'bullet');
+    }
+
+    fire(x, y) {
+        this.body.reset(x, y);
+
+        this.setActive(true);
+        this.setVisible(true);
+
+        if (movimentBullet === 'up') {
+            this.setVelocityY(-300);
+        }
+        else if (movimentBullet === 'down') {
+            this.setVelocityY(300);
+        }
+        else if (movimentBullet === 'left') {
+            this.setVelocityX(-300);
+        }
+        else if (movimentBullet === 'right') {
+            this.setVelocityX(300);
+        }
+    }
+
+}
+
+class Bullets extends Phaser.Physics.Arcade.Group {
+    constructor(scene) {
+        super(scene.physics.world, scene);
+
+        this.createMultiple({
+            frameQuantity: 6,
+            key: 'bullet',
+            active: false,
+            visible: false,
+            classType: Bullet
+        });
+    }
+
+    fireBullet(x, y) {
+        let bullet = this.getFirstDead(false);
+
+        if (bullet) {
+            bullet.fire(x, y);
+        }
+    }
+}
+

@@ -5,11 +5,10 @@ class LoadScene extends Phaser.Scene {
         this.load.image('bg-control', 'assets/bg-control.png');
         this.load.image('bg-button', 'assets/bg-button.png');
         this.load.image('block', 'assets/block.png');
+        this.load.image('bullet', 'assets/bullet.png');
 
-        /*this.load.image('up', 'assets/block.png');
-        this.load.image('down', 'assets/block.png');
-        this.load.image('left', 'assets/block.png');
-        this.load.image('right', 'assets/block.png');*/
+        this.load.image('button', 'assets/button.png');
+        this.load.image('weapon', 'assets/weapon.png');
 
         this.load.image('end', 'assets/end.png');
         this.load.image('part', 'assets/part.png');

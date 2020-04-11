@@ -22,7 +22,7 @@ var config = {
             debug: false
         }
     },
-    scene: BootScene
+    scene: BootScene,
 
 };
 var game = new Phaser.Game(config);
