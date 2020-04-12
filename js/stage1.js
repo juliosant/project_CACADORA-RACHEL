@@ -19,12 +19,12 @@ class Stage1 extends Phaser.Scene {
 
             [],
             [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 5, 0, 0, 1],
+            [0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 5, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 7, 0, 9, 0, 0, 1],
             [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
-            [0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 0, 1, 3, 1, 1, 0, 1, 0, 1],
             [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
             [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
-            [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+            [0, 0, 0, 0, 0, 0, 1, 3, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
             [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1],
             [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
             [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
@@ -36,11 +36,47 @@ class Stage1 extends Phaser.Scene {
             [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 3, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1],
             [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1],
             [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1],
-            [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 6, 0, 3, 1, 1, 0, 1, 0, 0, 1],
             [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
         ]
         this.platforms = this.physics.add.staticGroup();
+        this.coins = this.physics.add.group();
+        this.enemies = this.physics.add.group();
 
+        //::::::::::::::::::::::ANIMAÇÂO DA MOEDA::::::::::::::::::::::
+        this.anims.create({
+            key: 'gira-gira',
+            frames: this.anims.generateFrameNumbers('coin', { start: 0, end: 9 }),
+            frameRate: 10,
+            repeat: -1,
+        });
+
+        ////::::::::::::::::::::::ANIMAÇÂO DOS INIMIGOS::::::::::::::::::::::
+        this.anims.create({
+            key: 'goLeft',
+            frames: this.anims.generateFrameNumbers('enemy', { start: 16, end: 23 }),
+            frameRate: 10,
+            repeat: -1,
+        });
+        this.anims.create({
+            key: 'goRight',
+            frames: this.anims.generateFrameNumbers('enemy', { start: 8, end: 15 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'goUp',
+            frames: this.anims.generateFrameNumbers('enemy', { start: 24, end: 31 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'goDown',
+            frames: this.anims.generateFrameNumbers('enemy', { start: 0, end: 7 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        
         for (var row in this.maze) {
             for (var col in this.maze[row]) {
                 this.tile = this.maze[row][col]
@@ -97,52 +133,48 @@ class Stage1 extends Phaser.Scene {
 
                 }
 
-
                 //::::::::::::::::::::::::::::::CRIANDO MOEDA::::::::::::::::::::::::::::::
                 else if (this.tile === 3) {
-                    this.coins = this.physics.add.sprite(x + 12.5, y + 12.5, 'coin');
-                    this.anims.create({
-                        key: 'gira-gira',
-                        frames: this.anims.generateFrameNumbers('coin', { start: 0, end: 9 }),
-                        frameRate: 10,
-                        repeat: -1,
-                    });
+                    //this.coin = this.physics.add.sprite(x + 12.5, y + 12.5, 'coin').play('gira-gira');
+                    //this.coins.add(this.coin);
+                    this.coins.create(x + 12.5, y + 12.5, 'coin').play('gira-gira');  
                 }
 
                 //::::::::::::::::::::::::::::::CRIANDO INIMIGO::::::::::::::::::::::::::::::
 
                 else if (this.tile === 4) {
-                    this.enemy = this.physics.add.sprite(x + 12.5, y + 12.5, 'enemy');
-                    this.enemy.setCollideWorldBounds(true);
-
-                    this.anims.create({
-                        key: 'goLeft',
-                        frames: this.anims.generateFrameNumbers('enemy', { start: 16, end: 23 }),
-                        frameRate: 10,
-                        repeat: -1,
-                    });
-                    this.anims.create({
-                        key: 'goRight',
-                        frames: this.anims.generateFrameNumbers('enemy', { start: 8, end: 15 }),
-                        frameRate: 10,
-                        repeat: -1
-                    });
-                    this.anims.create({
-                        key: 'goUp',
-                        frames: this.anims.generateFrameNumbers('enemy', { start: 24, end: 31 }),
-                        frameRate: 10,
-                        repeat: -1
-                    });
-                    this.anims.create({
-                        key: 'goDown',
-                        frames: this.anims.generateFrameNumbers('enemy', { start: 0, end: 7 }),
-                        frameRate: 10,
-                        repeat: -1
-                    });
-                    this.enemy.direction = "DOWN";
+                    this.enemy0 = this.physics.add.sprite(x + 12.5, y + 12.5, 'enemy');
+                    this.enemy0.setCollideWorldBounds(true);
+                    this.enemy0.direction = "DOWN";
+                    this.enemies.add(this.enemy0);
+                    //this.moveEnemy(this.enemy);
+                    
+                }
+                else if (this.tile === 5) {
+                    this.enemy1 = this.physics.add.sprite(x + 12.5, y + 12.5, 'enemy');
+                    this.enemy1.setCollideWorldBounds(true);
+                    this.enemy1.direction = "DOWN";
+                    this.enemies.add(this.enemy1);
+                    //this.moveEnemy(this.enemy);
+                    
+                }
+                else if (this.tile === 6) {
+                    this.enemy2 = this.physics.add.sprite(x + 12.5, y + 12.5, 'enemy');
+                    this.enemy2.setCollideWorldBounds(true);
+                    this.enemy2.direction = "DOWN";
+                    this.enemies.add(this.enemy2);
+                    
                 }
 
-                else if(this.tile === 5){
+                else if (this.tile === 7) {
+                    this.enemy3 = this.physics.add.sprite(x + 12.5, y + 12.5, 'enemy');
+                    this.enemy3.setCollideWorldBounds(true);
+                    this.enemy3.direction = "DOWN";
+                    this.enemies.add(this.enemy3);
+                    
+                }
+
+                else if(this.tile === 9){
                     this.weapon = this.physics.add.image(x+12.5, y+12.5, 'weapon');
                 }
                 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -196,15 +228,16 @@ class Stage1 extends Phaser.Scene {
         this.hpText = this.add.text(450, 10, 'Hp: ' + this.hp, { font: '12px emulogic', fill: '#ffa' });
         
         this.amunitionBullet = 6;
-        this.amunitionBulletText = this.add.text(675, 10, 'Amunition: ' + this.amunitionBullet, { font: '12px emulogic', fill: '#ffa' });
+        this.amunitionBulletText = this.add.text(675, 10, 'Amunition: ' + this.amunitionBullet,{ font: '12px emulogic', fill: '#ffa' });
         this.amunitionBulletText.setVisible(false);
+
         //COLISÕES
         this.physics.add.collider(this.player, this.platforms);
-        this.physics.add.collider(this.enemy, this.platforms)
+        this.physics.add.collider(this.enemies, this.platforms);
         this.physics.add.overlap(this.player, this.coins, this.pegaMoeda, null, this);
-        this.physics.add.overlap(this.player, this.enemy, this.tomaDano, null, this);
+        this.physics.add.overlap(this.player, this.enemies, this.tomaDano, null, this);
         this.physics.add.overlap(this.player, this.weapon, this.pegaArma, null, this);
-        this.physics.add.overlap(this.bullets, this.enemy, this.tiroAcertado, null, this);
+        this.physics.add.overlap(this.bullets, this.enemies, this.tiroAcertado, null, this);
     }
 
 
@@ -227,61 +260,15 @@ class Stage1 extends Phaser.Scene {
             moviment = null;
         }
         this.text.setText(s);
-
-
-        //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
     }
 
 
 
     update() {
-        //::::::::::::::::::::ANIMAÇÃO DA MOEDA::::::::::::::::::::
-        if (this.coins.setVelocityX(0) && this.coins.setVelocityY(0)) {
-            this.coins.anims.play('gira-gira', true);
-        }
-
-        //::::::::::::::::::::ANIMAÇÃO DA INIMIGO::::::::::::::::::::
-        if (Math.floor(this.enemy.x - 12.5) % 25 === 0 && Math.floor(this.enemy.y - 12.5) % 25 === 0) {
-            var enemyCol = Math.floor(this.enemy.x / 25);
-            var enemyRow = Math.floor(this.enemy.y / 25);
-            var validPath = [];
-
-            if (this.maze[enemyRow][enemyCol - 1] !== 1 && this.enemy.direction !== 'RIGHT') {
-                validPath.push('LEFT');
-            }
-            if (this.maze[enemyRow][enemyCol + 1] !== 1 && this.enemy.direction !== 'LEFT') {
-                validPath.push('RIGHT');
-            }
-            if (this.maze[enemyRow - 1][enemyCol] !== 1 && this.enemy.direction !== 'DOWN') {
-                validPath.push('UP');
-            }
-            if (this.maze[enemyRow + 1][enemyCol] !== 1 && this.enemy.direction !== 'UP') {
-                validPath.push('DOWN');
-            }
-
-            this.enemy.direction = validPath[Math.floor(Math.random() * validPath.length)];
-        }
-
-        switch (this.enemy.direction) {
-            case 'LEFT':
-                this.enemy.x -= 1;
-                this.enemy.anims.play('goLeft', true);
-                break;
-            case 'RIGHT':
-                this.enemy.x += 1;
-                this.enemy.anims.play('goRight', true);
-                break;
-            case 'UP':
-                this.enemy.y -= 1;
-                this.enemy.anims.play('goUp', true)
-                break;
-            case 'DOWN':
-                this.enemy.y += 1;
-                this.enemy.anims.play('goDown', true)
-                break;
-
-        }
+        this.moveEnemy(this.enemy0);
+        this.moveEnemy(this.enemy1);
+        this.moveEnemy(this.enemy2);
+        this.moveEnemy(this.enemy3);
 
         //::::::::::::::::::::ANIMAÇÃO DO PLAYER::::::::::::::::::::
         this.player.setVelocityX(0);
@@ -311,6 +298,49 @@ class Stage1 extends Phaser.Scene {
             this.player.anims.stop('up', true);
         }
 
+    }
+
+    moveEnemy(enemy){
+        if (Math.floor(enemy.x - 12.5) % 25 === 0 && Math.floor(enemy.y - 12.5) % 25 === 0) {
+            var enemyCol = Math.floor(enemy.x / 25);
+            var enemyRow = Math.floor(enemy.y / 25);
+            var validPath = [];
+
+            if (this.maze[enemyRow][enemyCol - 1] !== 1 && enemy.direction !== 'RIGHT') {
+                validPath.push('LEFT');
+            }
+            if (this.maze[enemyRow][enemyCol + 1] !== 1 && enemy.direction !== 'LEFT') {
+                validPath.push('RIGHT');
+            }
+            if (this.maze[enemyRow - 1][enemyCol] !== 1 && enemy.direction !== 'DOWN') {
+                validPath.push('UP');
+            }
+            if (this.maze[enemyRow + 1][enemyCol] !== 1 && enemy.direction !== 'UP') {
+                validPath.push('DOWN');
+            }
+
+            enemy.direction = validPath[Math.floor(Math.random() * validPath.length)];
+        }
+
+        switch (enemy.direction) {
+            case 'LEFT':
+                enemy.x -= 1;
+                enemy.anims.play('goLeft', true);
+                break;
+            case 'RIGHT':
+                enemy.x += 1;
+                enemy.anims.play('goRight', true);
+                break;
+            case 'UP':
+                enemy.y -= 1;
+                enemy.anims.play('goUp', true)
+                break;
+            case 'DOWN':
+                enemy.y += 1;
+                enemy.anims.play('goDown', true)
+                break;
+
+        }
     }
 
 
@@ -362,7 +392,7 @@ class Stage1 extends Phaser.Scene {
         this.amunitionBulletText.setVisible(true);
     }
 
-    tiroAcertado(enemy, bullet){
+    tiroAcertado(bullet, enemy ){
         enemy.disableBody(true, true);
         bullet.disableBody(true, true);
         bullet.setActive(true);
@@ -436,4 +466,3 @@ class Bullets extends Phaser.Physics.Arcade.Group {
         }
     }
 }
-
