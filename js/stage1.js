@@ -9,7 +9,6 @@ class Stage1 extends Phaser.Scene {
 
         this.maze = [
 
-
             /*  1: local onde ficará os blocos
                2: Local onde Rachel começará a fase
                3: local onde estará as moedas.
@@ -19,7 +18,7 @@ class Stage1 extends Phaser.Scene {
 
             [],
             [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 5, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 7, 0, 9, 0, 0, 1],
+            [0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 4, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 4, 0, 9, 0, 0, 1],
             [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
             [0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 0, 1, 3, 1, 1, 0, 1, 0, 1],
             [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -33,15 +32,19 @@ class Stage1 extends Phaser.Scene {
             [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1],
             [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1],
             [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 4, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1],
-            [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 3, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 3, 0, 4, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1],
             [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1],
             [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1],
-            [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 6, 0, 3, 1, 1, 0, 1, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 4, 0, 3, 1, 1, 0, 1, 0, 0, 1],
             [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
         ]
         this.platforms = this.physics.add.staticGroup();
+        
         this.coins = this.physics.add.group();
+        
         this.enemies = this.physics.add.group();
+        this.groupEnemies = [];
+        var enemyPosition = 0;
 
         //::::::::::::::::::::::ANIMAÇÂO DA MOEDA::::::::::::::::::::::
         this.anims.create({
@@ -76,7 +79,7 @@ class Stage1 extends Phaser.Scene {
             frameRate: 10,
             repeat: -1
         });
-        
+
         for (var row in this.maze) {
             for (var col in this.maze[row]) {
                 this.tile = this.maze[row][col]
@@ -135,49 +138,21 @@ class Stage1 extends Phaser.Scene {
 
                 //::::::::::::::::::::::::::::::CRIANDO MOEDA::::::::::::::::::::::::::::::
                 else if (this.tile === 3) {
-                    //this.coin = this.physics.add.sprite(x + 12.5, y + 12.5, 'coin').play('gira-gira');
-                    //this.coins.add(this.coin);
-                    this.coins.create(x + 12.5, y + 12.5, 'coin').play('gira-gira');  
+                    this.coins.create(x + 12.5, y + 12.5, 'coin').play('gira-gira');
                 }
 
                 //::::::::::::::::::::::::::::::CRIANDO INIMIGO::::::::::::::::::::::::::::::
 
                 else if (this.tile === 4) {
-                    this.enemy0 = this.physics.add.sprite(x + 12.5, y + 12.5, 'enemy');
-                    this.enemy0.setCollideWorldBounds(true);
-                    this.enemy0.direction = "DOWN";
-                    this.enemies.add(this.enemy0);
-                    //this.moveEnemy(this.enemy);
-                    
-                }
-                else if (this.tile === 5) {
-                    this.enemy1 = this.physics.add.sprite(x + 12.5, y + 12.5, 'enemy');
-                    this.enemy1.setCollideWorldBounds(true);
-                    this.enemy1.direction = "DOWN";
-                    this.enemies.add(this.enemy1);
-                    //this.moveEnemy(this.enemy);
-                    
-                }
-                else if (this.tile === 6) {
-                    this.enemy2 = this.physics.add.sprite(x + 12.5, y + 12.5, 'enemy');
-                    this.enemy2.setCollideWorldBounds(true);
-                    this.enemy2.direction = "DOWN";
-                    this.enemies.add(this.enemy2);
-                    
+                    this.groupEnemies[enemyPosition] = this.physics.add.sprite(x + 12.5, y + 12.5, 'enemy');
+                    this.groupEnemies[enemyPosition].setCollideWorldBounds(true);
+                    this.enemies.add(this.groupEnemies[enemyPosition]);
+                    enemyPosition += 1; 
                 }
 
-                else if (this.tile === 7) {
-                    this.enemy3 = this.physics.add.sprite(x + 12.5, y + 12.5, 'enemy');
-                    this.enemy3.setCollideWorldBounds(true);
-                    this.enemy3.direction = "DOWN";
-                    this.enemies.add(this.enemy3);
-                    
+                else if (this.tile === 9) {
+                    this.weapon = this.physics.add.image(x + 12.5, y + 12.5, 'weapon');
                 }
-
-                else if(this.tile === 9){
-                    this.weapon = this.physics.add.image(x+12.5, y+12.5, 'weapon');
-                }
-                //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
                 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
             }
         }
@@ -198,8 +173,8 @@ class Stage1 extends Phaser.Scene {
         this.button.on('pointerup', function (pointer) {
             this.button.clearTint();
         }, this);
-        
-        
+
+
 
         //:::::::::::::::::::::::::::::ADD MOVIMENTAÇÃO:::::::::::::::::::::::::::::
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -210,9 +185,7 @@ class Stage1 extends Phaser.Scene {
             radius: 50,
             base: this.add.circle(0, 0, 50, 0xc7bf97),
             thumb: this.add.circle(0, 0, 25, 0xfff3c9),
-            // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
-            // forceMin: 16,
-            // enable: true
+
         })
             .on('update', this.dumpJoyStickState, this);
 
@@ -220,18 +193,16 @@ class Stage1 extends Phaser.Scene {
         this.dumpJoyStickState();
 
 
-        //TEXTO DE HP, VIDA E MUNIÇÂO
+        //:::::::::::::::::::::::::::::TEXTO DE HP, VIDA E MUNIÇÂO:::::::::::::::::::::::::::::
         this.score = 0;
         this.scoreText = this.add.text(225, 10, 'Score: ' + this.score, { font: '12px emulogic', fill: '#ffa' });
-        
         this.hp = 200;
         this.hpText = this.add.text(450, 10, 'Hp: ' + this.hp, { font: '12px emulogic', fill: '#ffa' });
-        
         this.amunitionBullet = 6;
-        this.amunitionBulletText = this.add.text(675, 10, 'Amunition: ' + this.amunitionBullet,{ font: '12px emulogic', fill: '#ffa' });
+        this.amunitionBulletText = this.add.text(675, 10, 'Amunition: ' + this.amunitionBullet, { font: '12px emulogic', fill: '#ffa' });
         this.amunitionBulletText.setVisible(false);
 
-        //COLISÕES
+        //:::::::::::::::::::::::::::::COLISÕES:::::::::::::::::::::::::::::
         this.physics.add.collider(this.player, this.platforms);
         this.physics.add.collider(this.enemies, this.platforms);
         this.physics.add.overlap(this.player, this.coins, this.pegaMoeda, null, this);
@@ -252,9 +223,6 @@ class Stage1 extends Phaser.Scene {
         }
         force = Math.floor(this.joyStick.force * 100) / 100;
         angle = Math.floor(this.joyStick.angle * 100) / 100;
-        // s += '\n';
-        //s += ('Force: ' + force + '\n');
-        //s += ('Angle: ' + angle + '\n');
 
         if (force === 0 && angle === 0) {
             moviment = null;
@@ -265,10 +233,11 @@ class Stage1 extends Phaser.Scene {
 
 
     update() {
-        this.moveEnemy(this.enemy0);
-        this.moveEnemy(this.enemy1);
-        this.moveEnemy(this.enemy2);
-        this.moveEnemy(this.enemy3);
+        this.moveEnemy(this.groupEnemies[0]);
+        this.moveEnemy(this.groupEnemies[1]);
+        this.moveEnemy(this.groupEnemies[2]);
+        this.moveEnemy(this.groupEnemies[3]);
+        this.moveEnemy(this.groupEnemies[4]);
 
         //::::::::::::::::::::ANIMAÇÃO DO PLAYER::::::::::::::::::::
         this.player.setVelocityX(0);
@@ -300,7 +269,7 @@ class Stage1 extends Phaser.Scene {
 
     }
 
-    moveEnemy(enemy){
+    moveEnemy(enemy) {
         if (Math.floor(enemy.x - 12.5) % 25 === 0 && Math.floor(enemy.y - 12.5) % 25 === 0) {
             var enemyCol = Math.floor(enemy.x / 25);
             var enemyRow = Math.floor(enemy.y / 25);
@@ -386,13 +355,13 @@ class Stage1 extends Phaser.Scene {
         this.scoreText.setText('Score: ' + this.score);
     }
 
-    pegaArma(player, weapon){
+    pegaArma(player, weapon) {
         weapon.disableBody(true, true);
         this.button.setVisible(true);
         this.amunitionBulletText.setVisible(true);
     }
 
-    tiroAcertado(bullet, enemy ){
+    tiroAcertado(bullet, enemy) {
         enemy.disableBody(true, true);
         bullet.disableBody(true, true);
         bullet.setActive(true);
@@ -405,7 +374,7 @@ class Stage1 extends Phaser.Scene {
         this.amunitionBullet -= 1;
         this.amunitionBulletText.setText('Amunition: ' + this.amunitionBullet);
 
-        if(this.amunitionBullet === 0){
+        if (this.amunitionBullet === 0) {
             button.setVisible(false);
             this.amunitionBulletText.setVisible(false);
 
