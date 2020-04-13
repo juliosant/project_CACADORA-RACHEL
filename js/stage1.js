@@ -31,7 +31,7 @@ class Stage1 extends Phaser.Scene {
             [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1],
             [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1],
             [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1],
-            [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 4, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 4, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 4, 1],
             [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 3, 0, 4, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1],
             [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1],
             [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1],
@@ -39,9 +39,9 @@ class Stage1 extends Phaser.Scene {
             [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
         ]
         this.platforms = this.physics.add.staticGroup();
-        
+
         this.coins = this.physics.add.group();
-        
+
         this.enemies = this.physics.add.group();
         this.groupEnemies = [];
         var enemyPosition = 0;
@@ -147,7 +147,7 @@ class Stage1 extends Phaser.Scene {
                     this.groupEnemies[enemyPosition] = this.physics.add.sprite(x + 12.5, y + 12.5, 'enemy');
                     this.groupEnemies[enemyPosition].setCollideWorldBounds(true);
                     this.enemies.add(this.groupEnemies[enemyPosition]);
-                    enemyPosition += 1; 
+                    enemyPosition += 1;
                 }
 
                 else if (this.tile === 9) {
@@ -233,11 +233,10 @@ class Stage1 extends Phaser.Scene {
 
 
     update() {
-        this.moveEnemy(this.groupEnemies[0]);
-        this.moveEnemy(this.groupEnemies[1]);
-        this.moveEnemy(this.groupEnemies[2]);
-        this.moveEnemy(this.groupEnemies[3]);
-        this.moveEnemy(this.groupEnemies[4]);
+        let a;
+        for (a = 0; a < this.enemies.getLength(); a++) {
+            this.moveEnemy(this.groupEnemies[a]);
+        }
 
         //::::::::::::::::::::ANIMAÇÃO DO PLAYER::::::::::::::::::::
         this.player.setVelocityX(0);
