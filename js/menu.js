@@ -13,11 +13,16 @@ class MenuScene extends Phaser.Scene {
         this.playButton = this.add.text(this.game.renderer.width / 2, 300, '{PLAY}', { font: '37px emulogic', fill: '#f7f2ad' })
         .setOrigin(0.5).setInteractive();
 
-        this.optionButton = this.add.text(this.game.renderer.width / 2, 350, '{OPTIONS}', { font: '18px emulogic', fill: '#f7f2ad' })
+        this.optionButton = this.add.text(this.game.renderer.width / 2, 350, '{OPCOES}', { font: '18px emulogic', fill: '#f7f2ad' })
         .setOrigin(0.5).setInteractive();
         
-        this.creditsButton = this.add.text(this.game.renderer.width / 2, 390, '{CREDITS}', { font: '18px emulogic', fill: '#f7f2ad' })
+        this.creditsButton = this.add.text(this.game.renderer.width / 2, 390, '{CREDITOS}', { font: '18px emulogic', fill: '#f7f2ad' })
         .setOrigin(0.5).setInteractive();
+
+        //:::::::::::::::::::::::::::::::::::::::::Exibir maior pontuação:::::::::::::::::::::::::::::::::::::::::
+        this.txtHighScore = this.add.text(this.game.renderer.width / 2, 430, '->>> RECORDE:'+ highScore +' <<<-', { font: '20px emulogic', fill: '#f7f2ad' })
+        .setOrigin(0.5);
+        this.txtHighScore.setTintFill(0xf7f2ad, 0xf7f2ad, 0xbf40bf, 0xbf40bf);
        
         //:::::::::::::::::::::::::::::::::::::::::Colorir ao passar mouse:::::::::::::::::::::::::::::::::::::::::
         this.input.on('gameobjectover', function (pointer, gameObject) {
@@ -43,3 +48,6 @@ class MenuScene extends Phaser.Scene {
     }
     
 }
+
+var highScore = 0;
+var currentScoreGame = 0;

@@ -1,14 +1,5 @@
 body{
-    margin: 0;
-    background-color: gray;
-    position: relative;
-    width: 100vw;
-    height: 100vh;
     background: #52073c;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
 }
 
 @font-face{

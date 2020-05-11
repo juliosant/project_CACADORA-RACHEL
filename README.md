@@ -67,11 +67,10 @@ Haverá moedas/estrelas no caminho que somam pontuação. Onde uma quantidade pr
 
 #### Personas
 
-1. **Usuário 1** - usuário com acesso a um navegador web, que gosta de jogar games no computador desktop.
-
-2. **Usuário 2** - usuário com acesso a um navegador web, que gosta de jogar games no dispositivo móvel.
+1. **Usuário** - usuário com acesso a um navegador web, que gosta de jogar games no computador desktop e dispositivo móvel. 
 
    
+
 
 ## Protótipos de Tela
 
