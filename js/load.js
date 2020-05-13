@@ -14,8 +14,8 @@ class LoadScene extends Phaser.Scene {
         this.load.image('blockS1end', 'assets/blockStage1end.png');
 
         this.load.image('ammunition', 'assets/ammunition.png');
-        this.load.image('bullet', 'assets/bullet.png');
-        this.load.image('tower', 'assets/tower.png');
+        this.load.image('spike-ball', 'assets/spike-ball.png');
+        this.load.image('hunting-trap', 'assets/hunting-trap.png');
 
         this.load.image('button', 'assets/button.png');
         this.load.image('weapon', 'assets/weapon.png');
@@ -28,7 +28,6 @@ class LoadScene extends Phaser.Scene {
 
         var url;
             url = 'js/rexvirtualjoystickplugin.min.js';
-             //url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js';
              this.load.plugin('rexvirtualjoystickplugin', url, true);
         
         var movimentBullet; //armazenar direção da bala

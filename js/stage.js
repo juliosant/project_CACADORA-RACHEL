@@ -7,7 +7,7 @@ class Stage extends Phaser.Scene{
 
         this.add.image(150 / 2, 275, 'bg-control');
         this.add.image(962.5, 275, 'bg-button');
-        this.add.image(525, 275, this.keyBackgoround);
+        this.add.image(525, 275, this.keyBackground);
 
         this.platforms = this.physics.add.staticGroup();
         
@@ -15,7 +15,7 @@ class Stage extends Phaser.Scene{
 
         //::::::::::::::::::::::ANIMAÇÂO DA MOEDA::::::::::::::::::::::
         this.anims.create({
-            key: 'gira-gira',
+            key: 'spin',
             frames: this.anims.generateFrameNumbers('coin', { start: 0, end: 9 }),
             frameRate: 10,
             repeat: -1,
@@ -24,7 +24,10 @@ class Stage extends Phaser.Scene{
         this.enemies = this.physics.add.group();
         this.groupEnemies = [];
         this.enemyPosition = 0;
-        this.towerExisting = false;
+
+        this.traps = this.physics.add.group();
+        this.groupTrap = [];
+        this.posiytionTrap = 0;
 
         ////::::::::::::::::::::::ANIMAÇÂO DOS INIMIGOS::::::::::::::::::::::
         this.anims.create({
@@ -107,7 +110,7 @@ class Stage extends Phaser.Scene{
 
                 //::::::::::::::::::::::::::::::CRIANDO MOEDA::::::::::::::::::::::::::::::
                 else if (this.tile === 3) {
-                    this.coins.create(x + 12.5, y + 12.5, 'coin').play('gira-gira');
+                    this.coins.create(x + 12.5, y + 12.5, 'coin').play('spin');
                 }
 
                 //::::::::::::::::::::::::::::::CRIANDO INIMIGO::::::::::::::::::::::::::::::
@@ -127,15 +130,37 @@ class Stage extends Phaser.Scene{
 
                     this.tileEndS1 = this.platforms.create(x + 12.5, y + 12.5, 'blockS1end');
                 }
-
-                if (this.tile === 7) {
-
-                    this.tower = this.add.image(x + 12.5, y + 12.5, 'tower');
-                    this.towerExisting = true;
+                if(this.tile === 7){
+                    if(this.dynamicTrapExists){
+                        this.groupTrap[this.posiytionTrap] = this.physics.add.image(x + 12.5, y+ 12.5, 'spike-ball');
+                        this.traps.add(this.groupTrap[this.posiytionTrap]);
+                    }
+                    else if(this.staticTrapExists){
+                        this.groupTrap[this.posiytionTrap] = this.physics.add.image(x + 12.5, y+ 12.5, 'hunting-trap');
+                        this.traps.add(this.groupTrap[this.posiytionTrap]);
+                    }
+                    this.posiytionTrap += 1;
                 }
+                /*if (this.tile === 7 && this.dynamicTrapExists === true) {
+                    this.groupTrap[this.posiytionTrap] = this.physics.add.image(x + 12.5, y+ 12.5, 'spike-ball');
+                    this.traps.add(this.groupTrap[this.posiytionTrap]);
+                    this.posiytionTrap += 1;
+                }
+                else if (this.tile === 7 && this.staticTrapExists === true) {
+                    this.groupTrap[this.posiytionTrap] = this.physics.add.image(x + 12.5, y+ 12.5, 'hunting-trap');
+                    this.traps.add(this.groupTrap[this.posiytionTrap]);
+                    this.posiytionTrap += 1;
+                }
+                */
             }
         }
 
+        //Apresentacao do Estagio do labirinto
+        this.nameStage0 = this.add.text(512, 250, this.nameMaze0, { font: '15px emulogic', fill: '#ffffff' })
+        .setOrigin(0.5);
+        this.nameStage1 = this.add.text(512, 300, this.nameMaze1, { font: '37px emulogic', fill: '#ffffff' })
+        .setOrigin(0.5);
+        
 
         //:::::::::::::::::::::::::::::BOTÃO DE TIRO:::::::::::::::::::::::::::::
         this.button = this.add.image(962.5, 250, 'button').setInteractive();
@@ -152,17 +177,57 @@ class Stage extends Phaser.Scene{
             this.button.clearTint();
         }, this);
 
-        if (this.towerExisting) {
-            this.bulletTower = this.physics.add.image(this.tower.x, this.tower.y, 'bullet');
+        if (this.dynamicTrapExists) {
+            
             //::::::::::::::::::::::::::::: TEMPORÁRIO :::::::::::::::::::::::::::::
+            
             this.tween = this.tweens.add({
-                targets: this.bulletTower,
-                x: this.tower.y + 100,
-                duration: 4000,
-                ease: 'Linear',
-                repeat: 1, 
+                targets: this.groupTrap[0],
+                
+                x: this.groupTrap[0].x - 50,
+                duration: 300,
+                ease: 'Power',
+                yoyo: true,
                 loop: -1,
-                loopDelay: 1
+                loopDelay: 2500,
+                    
+            });
+
+            this.tween = this.tweens.add({
+                targets: this.groupTrap[1],
+                
+                y: this.groupTrap[1].y - 50,
+                duration: 500,
+                ease: 'Power',
+                yoyo: true,
+                loop: -1,
+                loopDelay: 1500,
+                
+                
+            });
+
+            this.tween = this.tweens.add({
+                targets: this.groupTrap[2],
+                y: this.groupTrap[2].y + 70,
+                duration: 100,
+                ease: 'Power',
+                yoyo: true,
+                loop: -1,
+                loopDelay: 2500,
+                
+                
+            });
+
+            this.tween = this.tweens.add({
+                targets: this.groupTrap[3],
+                
+                x: this.groupTrap[3].x + 70,
+                duration: 400,
+                ease: 'Power',
+                yoyo: true,
+                loop: -1,
+                loopDelay: 1500,
+                    
             });
         }
 
@@ -184,7 +249,7 @@ class Stage extends Phaser.Scene{
         this.dumpJoyStickState();
 
 
-        //:::::::::::::::::::::::::::::TEXTO DE HP, VIDA E MUNIÇÂO:::::::::::::::::::::::::::::
+        //:::::::::::::::::::::::::::::PONTOS, HP, MUNIÇÂO E TEMPO:::::::::::::::::::::::::::::
         this.score = currentScoreGame;
         this.scoreText = this.add.text(175, 10, 'Pontos: ' + this.score, { font: '12px emulogic', fill: '#ffa' });
         
@@ -197,10 +262,9 @@ class Stage extends Phaser.Scene{
         this.amunitionBulletText.setVisible(false);
         this.noBullets = this.add.text(500, 10, 'Sem balas!', { font: '12px emulogic', fill: '#aa0000' }).setVisible(false);
         
-        this.c = 120;
+        this.c = 150;
         this.clock = this.add.text(725, 10, 'Tempo: '+ this.c, { font: '12px emulogic', fill: '#ffa' });
         this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.onEvent, callbackScope: this, loop: true });
-
 
         //:::::::::::::::::::::::::::::COLISÕES:::::::::::::::::::::::::::::
         this.physics.add.collider(this.player, this.platforms);
@@ -210,7 +274,12 @@ class Stage extends Phaser.Scene{
         this.physics.add.overlap(this.player, this.weapon, this.getWeapon, null, this);
         this.physics.add.overlap(this.bullets, this.enemies, this.hitShot, null, this);
         this.physics.add.overlap(this.bullets, this.platforms, this.missedShot, null, this);
-        //this.physics.add.overlap(this.bulletTower, this.platforms, this.missedShotTower, null, this);
+        if(this.dynamicTrapExists){
+            this.physics.add.overlap(this.player, this.traps, this.damage, null, this);
+        }
+        else if(this.staticTrapExists){
+            this.physics.add.overlap(this.player, this.traps, this.damage, null, this);
+        }  
     }
 
 
@@ -277,6 +346,10 @@ class Stage extends Phaser.Scene{
         if (this.c === 0) {
             this.timedEvent.remove(false);
         }
+        if(this.c === 147){
+            this.nameStage0.destroy();
+            this.nameStage1.destroy();
+        }
     }
 
     moveEnemy(enemy) {
@@ -322,7 +395,7 @@ class Stage extends Phaser.Scene{
         }
     }
 
-
+    //:::::::::::::Andar:::::::::::::
     goLeft() {
         this.player.setVelocityX(-80);
         this.player.anims.play('left', true);
@@ -344,7 +417,8 @@ class Stage extends Phaser.Scene{
         movimentBullet = 'down';
     }
 
-    //VARIAÇÃO DE DANO
+    //:::::::::::Colisões reativas::::::::::::
+    //Ativado quando player colidir com algo que lhe cuse dano
     damage(player, enemy) {
         this.hp -= 1;
         this.hpText.setText('Hp: ' + this.hp);
@@ -352,26 +426,26 @@ class Stage extends Phaser.Scene{
         if (this.hp === 0) {
             this.physics.pause();
             this.player.setTint(0xff0000);
-            this.gameOver = true;
+        
 
         }
     }
 
-    //VARIAÇÃO DE SCORE
+    //Ativado ao colidir com moeda
     getCoin(player, coin) {
         coin.disableBody(true, true);
 
         this.score += 10;
         this.scoreText.setText('Pontos: ' + this.score);
     }
-
+    //Ativado quando player colidir com arma
     getWeapon(player, weapon) {
         weapon.disableBody(true, true);
         this.getWeaponObject.setVisible(false);
         this.button.setVisible(true);
         this.amunitionBulletText.setVisible(true);
     }
-
+    //Ao acertar bala no inimigo
     hitShot(bullet, enemy) {
         enemy.disableBody(true, true);
         bullet.disableBody(true, true);
@@ -386,15 +460,13 @@ class Stage extends Phaser.Scene{
             this.tileEndS1.setVisible(false)
         }
     }
+    //Sumir com a bala ao atirar contra o bloco
     missedShot(bullet, tile){
         bullet.disableBody(true, true);
         bullet.setActive(true);
     }
-    /*missedShotTower(bullet, tile){
-        bullet.disableBody(true, true);
-        bullet.setActive(true);
-    }*/
 
+    //Uma bala a menos ao atirar
     oneBulletLess(button) {
         this.amunitionBullet -= 1;
         this.amunitionBulletText.setText('Municao: ' + this.amunitionBullet);

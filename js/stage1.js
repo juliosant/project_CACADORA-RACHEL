@@ -1,9 +1,18 @@
 class Stage1 extends Stage {
+    nameMaze0 = "Labirinto 1"
+    nameMaze1 = "Floresta"
+
     //Definir bloclos do labirinto
     keyBlock = 'blockStage1'
 
     //Definir chão do labirinto
-    keyBackgoround = 'bgStage1'
+    keyBackground = 'bgStage1'
+
+    //existe armadilha estatica?
+    staticTrapExistis = false
+
+    //existe armadilha dinâmica?
+    dynamicTrapExists = false
 
     //Definir formato do labirinto
     maze = [
@@ -42,6 +51,7 @@ class Stage1 extends Stage {
     callNextStage() {
         currentScoreGame = this.score;
         this.scene.start('stage2')
+        //this.scene.transition({target: 'stage2', duration: 2000});
     }
 
 }
