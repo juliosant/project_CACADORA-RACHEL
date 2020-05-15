@@ -1,19 +1,22 @@
-class Stage extends Phaser.Scene{
+class Stage extends Phaser.Scene {
     create() {
 
         this.moviment;
         this.angle;
         this.force;
 
+        //::::::Backrounds::::::
         this.add.image(150 / 2, 275, 'bg-control');
         this.add.image(962.5, 275, 'bg-button');
         this.add.image(525, 275, this.keyBackground);
 
+        //::::::Agrupar blocos:::::::
         this.platforms = this.physics.add.staticGroup();
-        
+
+        //::::::Agrupar moedas:::::::
         this.coins = this.physics.add.group();
 
-        //::::::::::::::::::::::ANIMAÇÂO DA MOEDA::::::::::::::::::::::
+        //::::::Animação da moeda::::::
         this.anims.create({
             key: 'spin',
             frames: this.anims.generateFrameNumbers('coin', { start: 0, end: 9 }),
@@ -21,15 +24,12 @@ class Stage extends Phaser.Scene{
             repeat: -1,
         });
 
+        //::::::Agrupar inimigos::::::
         this.enemies = this.physics.add.group();
         this.groupEnemies = [];
         this.enemyPosition = 0;
 
-        this.traps = this.physics.add.group();
-        this.groupTrap = [];
-        this.posiytionTrap = 0;
-
-        ////::::::::::::::::::::::ANIMAÇÂO DOS INIMIGOS::::::::::::::::::::::
+        //::::::Animação do inimigo::::::
         this.anims.create({
             key: 'goLeft',
             frames: this.anims.generateFrameNumbers('enemy', { start: 16, end: 23 }),
@@ -55,6 +55,12 @@ class Stage extends Phaser.Scene{
             repeat: -1
         });
 
+        //:::::::Agrupar armadilhas::::::
+        this.traps = this.physics.add.group();
+        this.groupTrap = [];
+        this.posiytionTrap = 0;
+
+        //::::::Instanciar objetos  no labirinto::::::
         for (var row in this.maze) {
             for (var col in this.maze[row]) {
                 this.tile = this.maze[row][col]
@@ -62,20 +68,20 @@ class Stage extends Phaser.Scene{
                 var x = col * 25;
                 var y = row * 25;
 
-                //::::::::::::::::::::::::::::::CRIANDO BLOCOS::::::::::::::::::::::::::::::
+                //::::::Instanciar blocos::::::
                 if (this.tile === 1) {
 
                     this.platforms.create(x + 12.5, y + 12.5, this.keyBlock);
                 }
 
-                //::::::::::::::::::::::::::::::CRIANDO PLAYER::::::::::::::::::::::::::::::
+                //::::::Instanciar player::::::
                 else if (this.tile === 2) {
                     this.player = this.physics.add.sprite(x + 12.5, y + 12.5, 'player');
                     this.player.setTint(0xcccccc);
                     this.player.setBounce(1);
                     this.player.setCollideWorldBounds(true);
 
-                    //animar para a esquerda
+                    //::::::Animação do player::::::
                     this.anims.create({
                         key: 'left',
                         frames: this.anims.generateFrameNumbers('player', { start: 17, end: 23 }),
@@ -108,13 +114,12 @@ class Stage extends Phaser.Scene{
 
                 }
 
-                //::::::::::::::::::::::::::::::CRIANDO MOEDA::::::::::::::::::::::::::::::
+                //::::::Instanciar moeda::::::
                 else if (this.tile === 3) {
                     this.coins.create(x + 12.5, y + 12.5, 'coin').play('spin');
                 }
 
-                //::::::::::::::::::::::::::::::CRIANDO INIMIGO::::::::::::::::::::::::::::::
-
+                //::::::Instanciar inimigos::::::
                 else if (this.tile === 4) {
                     this.groupEnemies[this.enemyPosition] = this.physics.add.sprite(x + 12.5, y + 12.5, 'enemy');
                     this.groupEnemies[this.enemyPosition].setCollideWorldBounds(true);
@@ -122,88 +127,106 @@ class Stage extends Phaser.Scene{
                     this.enemyPosition += 1;
                 }
 
+                //::::::Instanciar arma::::::
                 else if (this.tile === 5) {
                     this.weapon = this.physics.add.image(x + 12.5, y + 12.5, 'weapon');
                 }
-                //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+                
+                //::::::Instanciar barreira::::::
                 if (this.tile === 6) {
 
-                    this.tileEndS1 = this.platforms.create(x + 12.5, y + 12.5, 'blockS1end');
+                    this.tileEnd = this.platforms.create(x + 12.5, y + 12.5, 'blockend');
                 }
-                if(this.tile === 7){
-                    if(this.dynamicTrapExists){
-                        this.groupTrap[this.posiytionTrap] = this.physics.add.image(x + 12.5, y+ 12.5, 'spike-ball');
+                
+                //::::::Instanciar armadilha::::::
+                if (this.tile === 7) {
+                    if (this.dynamicTrapExists) {
+                        this.groupTrap[this.posiytionTrap] = this.physics.add.image(x + 12.5, y + 12.5, 'spike-ball');
                         this.traps.add(this.groupTrap[this.posiytionTrap]);
                     }
-                    else if(this.staticTrapExists){
-                        this.groupTrap[this.posiytionTrap] = this.physics.add.image(x + 12.5, y+ 12.5, 'hunting-trap');
+                    else if (this.staticTrapExists) {
+                        this.groupTrap[this.posiytionTrap] = this.physics.add.image(x + 12.5, y + 12.5, 'hunting-trap');
                         this.traps.add(this.groupTrap[this.posiytionTrap]);
+                        this.leverExists = true;
                     }
                     this.posiytionTrap += 1;
                 }
-                /*if (this.tile === 7 && this.dynamicTrapExists === true) {
-                    this.groupTrap[this.posiytionTrap] = this.physics.add.image(x + 12.5, y+ 12.5, 'spike-ball');
-                    this.traps.add(this.groupTrap[this.posiytionTrap]);
-                    this.posiytionTrap += 1;
+                //::::::Instanciar alavanca (Somente na 3a fase)::::::
+                if (this.tile === 8 && this.leverExists) {
+                    this.lever = this.physics.add.image(x + 12.5, y + 12.5, 'lever');
                 }
-                else if (this.tile === 7 && this.staticTrapExists === true) {
-                    this.groupTrap[this.posiytionTrap] = this.physics.add.image(x + 12.5, y+ 12.5, 'hunting-trap');
-                    this.traps.add(this.groupTrap[this.posiytionTrap]);
-                    this.posiytionTrap += 1;
-                }
-                */
             }
         }
 
-        //Apresentacao do Estagio do labirinto
+        //:::::::Apresentacao do labirinto:::::::
         this.nameStage0 = this.add.text(512, 250, this.nameMaze0, { font: '15px emulogic', fill: '#ffffff' })
-        .setOrigin(0.5);
+            .setOrigin(0.5);
         this.nameStage1 = this.add.text(512, 300, this.nameMaze1, { font: '37px emulogic', fill: '#ffffff' })
-        .setOrigin(0.5);
-        
+            .setOrigin(0.5);
 
-        //:::::::::::::::::::::::::::::BOTÃO DE TIRO:::::::::::::::::::::::::::::
-        this.button = this.add.image(962.5, 250, 'button').setInteractive();
-        this.button.setVisible(false);
+
+        //:::::::::::::::::::::::::BOTÔES:::::::::::::::::::::::::::
+        //::::::Botão de tiro::::::
+        this.weaponButton = this.add.image(962.5, 250, 'weaponButton').setInteractive();
+        this.weaponButton.setVisible(false);
         this.bullets = new Bullets(this);
 
-        this.button.on('pointerdown', function (pointer) {
-            this.button.setTintFill(0xc7bf97, 0xfff3c9, 0xc7bf97);
+        this.weaponButton.on('pointerdown', function (pointer) {
+            this.weaponButton.setTintFill(0xc7bf97, 0xfff3c9, 0xc7bf97);
             this.bullets.fireBullet(this.player.x, this.player.y);
-            this.oneBulletLess(this.button);
+            this.oneBulletLess(this.weaponButton);
         }, this);
 
-        this.button.on('pointerup', function (pointer) {
-            this.button.clearTint();
+        this.weaponButton.on('pointerup', function (pointer) {
+            this.weaponButton.clearTint();
         }, this);
 
+        //::::::Botão para desativar armadilhas::::::
+        if (this.staticTrapExists) {
+            this.leverButton = this.add.image(962.5, 350, 'leverButton').setInteractive()
+                .setVisible(false);
+            this.leverButton.on('pointerdown', function (pointer) {
+                this.leverButton.setTintFill(0xc7bf97, 0xfff3c9, 0xc7bf97);
+                let i;
+                let j = this.traps.getLength();
+                for (i = 0; i < j; i++) {
+                    this.groupTrap[i].destroy();
+                    console.log(this.traps.getLength());
+                }
+                this.leverButton.destroy();
+
+            }, this);
+        }
+
+
+        //:::::::Movimento das aradilhas dinâmicas:::::::
         if (this.dynamicTrapExists) {
-            
-            //::::::::::::::::::::::::::::: TEMPORÁRIO :::::::::::::::::::::::::::::
-            
+
+
+
             this.tween = this.tweens.add({
                 targets: this.groupTrap[0],
-                
+
                 x: this.groupTrap[0].x - 50,
                 duration: 300,
                 ease: 'Power',
                 yoyo: true,
                 loop: -1,
                 loopDelay: 2500,
-                    
+
             });
 
             this.tween = this.tweens.add({
                 targets: this.groupTrap[1],
-                
+
                 y: this.groupTrap[1].y - 50,
                 duration: 500,
                 ease: 'Power',
                 yoyo: true,
                 loop: -1,
                 loopDelay: 1500,
-                
-                
+
+
             });
 
             this.tween = this.tweens.add({
@@ -214,27 +237,28 @@ class Stage extends Phaser.Scene{
                 yoyo: true,
                 loop: -1,
                 loopDelay: 2500,
-                
-                
+
+
             });
 
             this.tween = this.tweens.add({
                 targets: this.groupTrap[3],
-                
+
                 x: this.groupTrap[3].x + 70,
                 duration: 400,
                 ease: 'Power',
                 yoyo: true,
                 loop: -1,
                 loopDelay: 1500,
-                    
+
             });
         }
 
-
-        //:::::::::::::::::::::::::::::ADD MOVIMENTAÇÃO:::::::::::::::::::::::::::::
+        //:::::::::::::::::::RECURSO DE ENTRADA:::::::::::::::::::
+        //:::::::Instancia de teclado:::::::
         this.cursors = this.input.keyboard.createCursorKeys();
 
+        //::::::Instancia do controle virtual::::::
         this.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
             x: 75,
             y: 275,
@@ -249,40 +273,46 @@ class Stage extends Phaser.Scene{
         this.dumpJoyStickState();
 
 
-        //:::::::::::::::::::::::::::::PONTOS, HP, MUNIÇÂO E TEMPO:::::::::::::::::::::::::::::
+        //:::::::::::::::::::::::::::::INFORMAÇÔES DE NA PARTE DE CIMA DA TELA:::::::::::::::::::::::::::::
+        //::::::Pontuação::::::
         this.score = currentScoreGame;
         this.scoreText = this.add.text(175, 10, 'Pontos: ' + this.score, { font: '12px emulogic', fill: '#ffa' });
-        
-        this.hp = 200;
-        this.hpText = this.add.text(350, 10, 'Hp: ' + this.hp, { font: '12px emulogic', fill: '#00aa00' });
-        
-        this.getWeaponObject = this.add.text(475, 10, '[Pegue a Arma!]', { font: '12px emulogic', fill: '#a0a0a0' })
-        this.amunitionBullet = 10;
-        this.amunitionBulletText = this.add.text(500, 10, 'Municao: ' + this.amunitionBullet, { font: '12px emulogic', fill: '#f5a460' });
+
+        //::::::Situação de armamento::::::
+        this.amunitionBullet = 7;
+        //::::::Situação 1
+        this.getWeaponObject = this.add.text(400, 10, '[Pegue a Arma!]', { font: '12px emulogic', fill: '#a0a0a0' })
+        //::::::Situação 2
+        this.amunitionBulletText = this.add.text(400, 10, 'Municao: ' + this.amunitionBullet + ' balas', { font: '12px emulogic', fill: '#f5a460' });
         this.amunitionBulletText.setVisible(false);
-        this.noBullets = this.add.text(500, 10, 'Sem balas!', { font: '12px emulogic', fill: '#aa0000' }).setVisible(false);
+        //::::::Situação 3
+        this.noBullets = this.add.text(425, 10, 'Sem balas!', { font: '12px emulogic', fill: '#aa0000' }).setVisible(false);
         
+        //::::::Tempo::::::
         this.c = 150;
-        this.clock = this.add.text(725, 10, 'Tempo: '+ this.c, { font: '12px emulogic', fill: '#ffa' });
+        this.clock = this.add.text(725, 10, 'Tempo: ' + this.c, { font: '12px emulogic', fill: '#ffa' });
         this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.onEvent, callbackScope: this, loop: true });
 
         //:::::::::::::::::::::::::::::COLISÕES:::::::::::::::::::::::::::::
+        //::::::Colisões simples::::::
         this.physics.add.collider(this.player, this.platforms);
         this.physics.add.collider(this.enemies, this.platforms);
+        //::::::Colisões reativas::::::
         this.physics.add.overlap(this.player, this.coins, this.getCoin, null, this);
         this.physics.add.overlap(this.player, this.enemies, this.damage, null, this);
         this.physics.add.overlap(this.player, this.weapon, this.getWeapon, null, this);
         this.physics.add.overlap(this.bullets, this.enemies, this.hitShot, null, this);
         this.physics.add.overlap(this.bullets, this.platforms, this.missedShot, null, this);
-        if(this.dynamicTrapExists){
+        if (this.dynamicTrapExists) {
             this.physics.add.overlap(this.player, this.traps, this.damage, null, this);
         }
-        else if(this.staticTrapExists){
+        else if (this.staticTrapExists) {
             this.physics.add.overlap(this.player, this.traps, this.damage, null, this);
-        }  
+            this.physics.add.overlap(this.player, this.lever, this.getLever, null, this);
+        }
     }
 
-
+    //:::::::Movimentação no controle virtual:::::::
     dumpJoyStickState() {
         var cursorKeys = this.joyStick.createCursorKeys();
         var s = /*'Key down: '*/'';
@@ -295,7 +325,7 @@ class Stage extends Phaser.Scene{
         this.force = Math.floor(this.joyStick.force * 100) / 100;
         this.angle = Math.floor(this.joyStick.angle * 100) / 100;
 
-        if ( this.force === 0 && this.angle === 0) {
+        if (this.force === 0 && this.angle === 0) {
             this.moviment = null;
         }
         this.text.setText(s);
@@ -330,13 +360,13 @@ class Stage extends Phaser.Scene{
         else if (this.player.setVelocityX(0) && this.player.setVelocityY(0)) {
             this.player.anims.stop('up', true);
         }
-        else if ( this.force === 0 && this.angle === 0) {
+        else if (this.force === 0 && this.angle === 0) {
             this.player.setVelocityX(0);
             this.player.setVelocityY(0);
             this.player.anims.stop('up', true);
         }
 
-        if(this.player.x > 875 && this.player.y > 475){
+        if (this.player.x > 875 && this.player.y > 475) {
             this.callNextStage();
         }
     }
@@ -345,8 +375,9 @@ class Stage extends Phaser.Scene{
         this.c--;
         if (this.c === 0) {
             this.timedEvent.remove(false);
+            this.gameOver();
         }
-        if(this.c === 147){
+        if (this.c === 147) {
             this.nameStage0.destroy();
             this.nameStage1.destroy();
         }
@@ -418,17 +449,11 @@ class Stage extends Phaser.Scene{
     }
 
     //:::::::::::Colisões reativas::::::::::::
-    //Ativado quando player colidir com algo que lhe cuse dano
-    damage(player, enemy) {
-        this.hp -= 1;
-        this.hpText.setText('Hp: ' + this.hp);
-
-        if (this.hp === 0) {
-            this.physics.pause();
-            this.player.setTint(0xff0000);
-        
-
-        }
+    //Ativado quando player colidir com inimigo/armadilha
+    damage(/*player, enemy*/) {
+        this.physics.pause();
+        this.player.setTint(0xff0000);
+        this.gameOver();
     }
 
     //Ativado ao colidir com moeda
@@ -442,7 +467,7 @@ class Stage extends Phaser.Scene{
     getWeapon(player, weapon) {
         weapon.disableBody(true, true);
         this.getWeaponObject.setVisible(false);
-        this.button.setVisible(true);
+        this.weaponButton.setVisible(true);
         this.amunitionBulletText.setVisible(true);
     }
     //Ao acertar bala no inimigo
@@ -455,13 +480,13 @@ class Stage extends Phaser.Scene{
         this.scoreText.setText('Score: ' + this.score);
 
         this.enemyPosition -= 1;
-        if(this.enemyPosition === 0){
-            this.tileEndS1.disableBody(true);
-            this.tileEndS1.setVisible(false)
+        if (this.enemyPosition === 0) {
+            this.tileEnd.disableBody(true);
+            this.tileEnd.setVisible(false)
         }
     }
     //Sumir com a bala ao atirar contra o bloco
-    missedShot(bullet, tile){
+    missedShot(bullet, tile) {
         bullet.disableBody(true, true);
         bullet.setActive(true);
     }
@@ -469,13 +494,32 @@ class Stage extends Phaser.Scene{
     //Uma bala a menos ao atirar
     oneBulletLess(button) {
         this.amunitionBullet -= 1;
-        this.amunitionBulletText.setText('Municao: ' + this.amunitionBullet);
+        //this.amunitionBulletText.setText('Municao: ' + this.amunitionBullet + ' balas');
+
+        if(this.amunitionBullet === 1){
+            this.amunitionBulletText.setText('Municao: ' + this.amunitionBullet + ' bala');
+        }
+        else{
+            this.amunitionBulletText.setText('Municao: ' + this.amunitionBullet + ' balas');  
+        }
 
         if (this.amunitionBullet === 0) {
             button.setVisible(false);
             this.amunitionBulletText.setVisible(false);
             this.noBullets.setVisible(true);
         }
+    }
+
+    //Ativar botão para desativar armadilhas
+    getLever(player, lever) {
+        lever.disableBody(true, true);
+        this.leverButton.setVisible(true);
+
+    }
+
+    //game over
+    gameOver(){
+        this.scene.start('gameOver');
     }
 }
 movimentBullet = 'down';
