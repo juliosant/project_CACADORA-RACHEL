@@ -13,6 +13,9 @@ class Stage2 extends Stage {
 
     //existe armadilha dinâmica?
     dynamicTrapExists = true
+    
+    //Orientações iniciais
+    introductionStage = 'introductionStage2';
 
     //Definir formato do labirinto
     maze = [

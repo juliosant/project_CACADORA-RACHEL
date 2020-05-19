@@ -3,6 +3,10 @@ class BootScene extends Phaser.Scene {
         this.scene.add('boot', BootScene);
         this.scene.add('load', LoadScene);
         this.scene.add('menu', MenuScene);
+        // Cena Temporária
+        this.scene.add('!temporary', Temporary);
+        // Cena Temporária
+        this.scene.add('presentation', InitialPresentation);
         this.scene.add('stage1', Stage1);
         this.scene.add('stage2', Stage2);
         this.scene.add('stage3', Stage3);

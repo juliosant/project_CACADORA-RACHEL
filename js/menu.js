@@ -34,7 +34,9 @@ class MenuScene extends Phaser.Scene {
 
         //:::::::::::::::::::::::::::::::::::::::::Apertar botões do menu:::::::::::::::::::::::::::::::::::::::::
         this.playButton.once('pointerdown', function () {
-            this.scene.start('stage1');
+            this.playButton.setTintFill(0xcf70cf);
+            this.time.addEvent({delay: 1000, callback: this.startGame, callbackScope: this, loop: false});
+            /*this.scene.start('presentation');*/
         }, this);
 
         this.optionButton.once('pointerdown', function () {
@@ -45,6 +47,9 @@ class MenuScene extends Phaser.Scene {
             this.scene.start('credits');
         }, this);
 
+    }
+    startGame(){
+        this.scene.start('presentation');
     }
     
 }
