@@ -27,6 +27,9 @@ class LoadScene extends Phaser.Scene {
         this.load.image('leverButton', 'assets/leverButton.png');
 
         this.load.image('progressbar', 'assets/progressbar.png');
+        this.load.image('juliel', 'assets/Juliel.png');
+        this.load.image('rachel', 'assets/Rachel.png');
+        this.load.image('monster', 'assets/Monster.png')
         
         this.load.spritesheet('player', 'assets/player.png', { frameWidth: 20, frameHeight: 25 });
         this.load.spritesheet('enemy', 'assets/enemy.png', { frameWidth: 20, frameHeight: 25 });

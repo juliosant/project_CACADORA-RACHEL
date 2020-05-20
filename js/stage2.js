@@ -50,8 +50,7 @@ class Stage2 extends Stage {
         [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ]
 
-    callNextStage() {
-        currentScoreGame = this.score
+    callNextScene() {
         this.scene.start('stage3')
     }
 }

@@ -123,7 +123,7 @@ class Stage extends Phaser.Scene {
 
                 //::::::Instanciar inimigos::::::
                 else if (this.tile === 4) {
-                    this.groupEnemies[this.enemyPosition] = this.physics.add.sprite(x + 12.5, y + 12.5, 'enemy');
+                    this.groupEnemies[this.enemyPosition] = this.physics.add.sprite(x + 12.5, y + 12.5, 'enemy').setTint('0xff5555');
                     this.groupEnemies[this.enemyPosition].setCollideWorldBounds(true);
                     this.enemies.add(this.groupEnemies[this.enemyPosition]);
                     this.enemyPosition += 1;
@@ -160,9 +160,6 @@ class Stage extends Phaser.Scene {
                 }
             }
         }
-        /*if(this.tombsExists == true){
-            
-        }*/
 
         //:::::::::::::::::::::::::BOTÔES:::::::::::::::::::::::::::
         //::::::Botão de tiro::::::
@@ -274,7 +271,10 @@ class Stage extends Phaser.Scene {
 
         //:::::::::::::::::::::::::::::INFORMAÇÔES DE NA PARTE DE CIMA DA TELA:::::::::::::::::::::::::::::
         //::::::Pontuação::::::
-        this.score = currentScoreGame;
+        if(this.scoreequalZero){
+            currentScore = 0
+        }
+        this.score = currentScore;
         this.scoreText = this.add.text(175, 10, 'Pontos: ' + this.score, { font: '12px emulogic', fill: '#ffa' });
 
         //::::::Situação de armamento::::::
@@ -296,7 +296,6 @@ class Stage extends Phaser.Scene {
         //::::::Colisões simples::::::
         this.physics.add.collider(this.player, this.platforms);
         this.physics.add.collider(this.enemies, this.platforms);
-
         //::::::Colisões reativas::::::
         this.physics.add.overlap(this.player, this.coins, this.getCoin, null, this);
         this.physics.add.overlap(this.player, this.enemies, this.damage, null, this);
@@ -313,9 +312,10 @@ class Stage extends Phaser.Scene {
             this.physics.add.overlap(this.player, this.tombFinal, this.damage, null, this);
         }
 
-        //Orientações iniciais da fase
+        //::::::::::::::::::::::::::ORIENTAÇÔES UMICIAIS DA FASE::::::::::::::::::::::::::
+        //:::::::Imagem de orientação
         this.introductingStage = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 2, this.introductionStage);
-        //Botão para fechar orientação dac fase
+        //:::::::Botão para fechar orientação da fase
         this.closeintroductionButton = this.add.text(420, 400, '[Fechar]', { font: '20px emulogic', fill: '#f7f2ad' }).setInteractive();
         this.closeintroductionButton.once('pointerdown', function (pointer) {
             this.closeintroductionButton.destroy();
@@ -328,7 +328,8 @@ class Stage extends Phaser.Scene {
                 .setOrigin(0.5);
             this.presentationTime = this.time.addEvent({ delay: 3000, callback: this.endOfStagePresentation, callbackScope: this, loop: false })
             this.introStage = false;
-        }, this)
+        }, this);
+
     }
 
     //:::::::Movimentação no controle virtual:::::::
@@ -354,6 +355,7 @@ class Stage extends Phaser.Scene {
         if (this.introStage == false) {
             this.clock.setText('Tempo: ' + this.c);
 
+            this.scoreText.setText('Pontos: ' + this.score)
             //::::::::::::::::::::ANIMAÇÃO DO INIMIGO::::::::::::::::::::
             let a;
             for (a = 0; a < this.enemies.getLength(); a++) {
@@ -551,7 +553,40 @@ class Stage extends Phaser.Scene {
 
     //game over
     gameOver() {
+        currentScore = 0
         this.scene.start('gameOver');
     }
+
+    callNextStage() {
+        this.timedEvent.remove();
+        //this.tempo = this.c;
+        currentScore = this.score + this.c;
+
+        this.Congratulationtext = this.add.text(this.game.renderer.width/2, 200, 'Parabens!', {font: '35px emulogic', fill: '#ffffff'})
+        .setOrigin(0.5);
+        if(this.staticTrapExists){
+            this.nextStageText = this.add.text((this.game.renderer.width/2)+10, 250, 'Voce consegui salvar Juliel!', {font: '20px emulogic', fill: '#ffffff'})
+            .setOrigin(0.5);
+            this.ScoreFinalStageText = this.add.text(this.game.renderer.width/2, 300, 'Pontuacao Final: '+ currentScore, {font: '20px emulogic', fill: '#ffffff'})
+            .setOrigin(0.5);
+        }
+        else{
+            this.nextStageText = this.add.text((this.game.renderer.width/2)+10, 250, 'Voce avancou para o proximo labirinto', {font: '20px emulogic', fill: '#ffffff'})
+            .setOrigin(0.5);
+            this.ScoreFinalStageText = this.add.text(this.game.renderer.width/2, 300, 'Pontuacao: '+ currentScore, {font: '20px emulogic', fill: '#ffffff'})
+            .setOrigin(0.5);
+        }
+        
+        this.time.addEvent({ delay: 4000, callback: this.callNextScene, callbackScope: this, loop: false })
+        if (this.enemies.getLength() > 0) {
+            for (let a = 0; a < this.enemies.getLength(); a++) {
+                this.groupEnemies[a].disableBody(true, true);
+            }
+        }
+        this.joyStick.setVisible(false)
+        this.player.disableBody(true, true);
+        
+    }
+
 }
 movimentBullet = 'down';

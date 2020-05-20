@@ -3,9 +3,6 @@ class BootScene extends Phaser.Scene {
         this.scene.add('boot', BootScene);
         this.scene.add('load', LoadScene);
         this.scene.add('menu', MenuScene);
-        // Cena Temporária
-        this.scene.add('!temporary', Temporary);
-        // Cena Temporária
         this.scene.add('presentation', InitialPresentation);
         this.scene.add('stage1', Stage1);
         this.scene.add('stage2', Stage2);
@@ -13,7 +10,8 @@ class BootScene extends Phaser.Scene {
         this.scene.add('credits', CreditsScene);
         this.scene.add('option', OptionScene);
         this.scene.add('gameOver', GameOverScene);
-
+        this.scene.add('final', FinalScene);
+        
         this.scene.start('load');
     }
     

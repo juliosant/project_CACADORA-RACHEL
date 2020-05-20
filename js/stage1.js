@@ -1,4 +1,8 @@
 class Stage1 extends Stage {
+    //zerar escores
+    scoreequalZero = true
+
+    //apresentar Labirnto
     nameMaze0 = "Labirinto 1"
     nameMaze1 = "Floresta"
 
@@ -51,10 +55,9 @@ class Stage1 extends Stage {
         [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ]
 
-    callNextStage() {
-        currentScoreGame = this.score;
+    
+    callNextScene() {
         this.scene.start('stage2')
-        //this.scene.transition({target: 'stage2', duration: 2000});
     }
 
 }

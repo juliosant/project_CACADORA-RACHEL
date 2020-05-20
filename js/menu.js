@@ -4,6 +4,15 @@ class MenuScene extends Phaser.Scene {
     }
 
     create() {
+        if(!localStorage.getItem('rachel_highScore')){
+			localStorage.setItem('rachel_highScore',0);
+		}
+		
+		if(highScore > localStorage.getItem('rachel_highScore')){
+			localStorage.setItem('rachel_highScore', highScore);
+		} else {
+			highScore = localStorage.getItem('rachel_highScore');
+		}
         this.input.addPointer();
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -55,4 +64,4 @@ class MenuScene extends Phaser.Scene {
 }
 
 var highScore = 0;
-var currentScoreGame = 0;
+var currentScore = 0;
