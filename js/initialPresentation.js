@@ -12,9 +12,9 @@ class InitialPresentation extends Phaser.Scene {
         this.buttonForNext = this.add.text(700, 450, "[Continuar]", { font: '20px emulogic', fill: '#f7f2ad' }).setInteractive();
 
         //this.add.sprite(200, 380,'rachel').setScale(0.5);
-        this.monster1 = this.add.image(462, 380, 'monster').setScale(0.5);
+        this.monster1 = this.add.image(462, 380, 'monster').setScale(0.5).setTint('0xff5555');
         this.juliel = this.add.image(512, 400, 'juliel').setScale(0.5);
-        this.monster2 = this.add.image(562, 380, 'monster').setScale(0.5);
+        this.monster2 = this.add.image(562, 380, 'monster').setScale(0.5).setTint('0xff5555');
 
         this.buttonForNext.once('pointerdown', function (pointer) {
             this.buttonForNext.setTintFill(0xcf70cf);

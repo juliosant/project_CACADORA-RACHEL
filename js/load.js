@@ -18,15 +18,22 @@ class LoadScene extends Phaser.Scene {
         this.load.image('tomb', 'assets/tomb.png');
         this.load.image('tombFinal', 'assets/tombFinal.png');
         this.load.image('lever', 'assets/lever.png');
+        this.load.image('objective', 'assets/objective.png');
 
         this.load.image('blockend', 'assets/blockSkullEnd.png');
+
+        this.load.image('particles', 'assets/particle.png');
+        this.load.image('blood', 'assets/bloodParticle.png');
+        this.load.image('blockParticle', 'assets/tileEndParticle.png');
+        this.load.image('tombFinalParticle', 'assets/tombFinalParticle.png');
+        this.load.image('tombParticle', 'assets/tombParticle.png');
 
         this.load.image('ammunition', 'assets/ammunition.png');
         this.load.image('weapon', 'assets/weapon.png');
         this.load.image('weaponButton', 'assets/button.png');
         this.load.image('leverButton', 'assets/leverButton.png');
 
-        this.load.image('progressbar', 'assets/progressbar.png');
+        //this.load.image('progressbar', 'assets/progressbar.png');
         this.load.image('juliel', 'assets/Juliel.png');
         this.load.image('rachel', 'assets/Rachel.png');
         this.load.image('monster', 'assets/Monster.png')
@@ -41,6 +48,8 @@ class LoadScene extends Phaser.Scene {
         
         var movimentBullet; //armazenar direção da bala
         
+        this.load.image('keyboardGame', 'assets/keyboard.png');
+        this.load.image('joystick', 'assets/joystick.png');
     }
     create(){
         this.scene.start('menu');

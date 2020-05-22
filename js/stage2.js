@@ -1,4 +1,12 @@
 class Stage2 extends Stage {
+    
+    //Para comportamentos referentes a 2a fase
+    isStage2 = true
+
+    //Orientações iniciais
+    introductionStage = 'introductionStage2';
+    
+    //Apresentação
     nameMaze0 = "Labirinto 2"
     nameMaze1 = "Cidade"
 
@@ -7,15 +15,6 @@ class Stage2 extends Stage {
 
     //Definir chão do labirinto
     keyBackground = 'bgStage2'
-
-    //existe armadilha estatica?
-    staticTrapExistis = false
-
-    //existe armadilha dinâmica?
-    dynamicTrapExists = true
-    
-    //Orientações iniciais
-    introductionStage = 'introductionStage2';
 
     //Definir formato do labirinto
     maze = [

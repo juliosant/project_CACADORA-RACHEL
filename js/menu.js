@@ -22,7 +22,7 @@ class MenuScene extends Phaser.Scene {
         this.playButton = this.add.text(this.game.renderer.width / 2, 300, '{PLAY}', { font: '37px emulogic', fill: '#f7f2ad' })
         .setOrigin(0.5).setInteractive();
 
-        this.optionButton = this.add.text(this.game.renderer.width / 2, 350, '{OPCOES}', { font: '18px emulogic', fill: '#f7f2ad' })
+        this.infoButton = this.add.text(this.game.renderer.width / 2, 350, '{INFO}', { font: '18px emulogic', fill: '#f7f2ad' })
         .setOrigin(0.5).setInteractive();
         
         this.creditsButton = this.add.text(this.game.renderer.width / 2, 390, '{CREDITOS}', { font: '18px emulogic', fill: '#f7f2ad' })
@@ -45,22 +45,28 @@ class MenuScene extends Phaser.Scene {
         this.playButton.once('pointerdown', function () {
             this.playButton.setTintFill(0xcf70cf);
             this.time.addEvent({delay: 1000, callback: this.startGame, callbackScope: this, loop: false});
-            /*this.scene.start('presentation');*/
         }, this);
 
-        this.optionButton.once('pointerdown', function () {
-            this.scene.start('option');
+        this.infoButton.once('pointerdown', function () {
+            this.infoButton.setTintFill(0xcf70cf);
+            this.time.addEvent({delay: 500, callback: this.openInfo, callbackScope: this, loop: false});
         }, this);
         
         this.creditsButton.once('pointerdown', function () {
-            this.scene.start('credits');
+            this.creditsButton.setTintFill(0xcf70cf);
+            this.time.addEvent({delay: 500, callback: this.openCredits, callbackScope: this, loop: false});
         }, this);
 
     }
     startGame(){
         this.scene.start('presentation');
     }
-    
+    openInfo(){
+        this.scene.start('info');
+    }
+    openCredits(){
+        this.scene.start('credits');
+    }
 }
 
 var highScore = 0;

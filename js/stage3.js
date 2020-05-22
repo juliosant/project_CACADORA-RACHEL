@@ -1,4 +1,11 @@
 class Stage3 extends Stage {
+    //Para comportamentos referentes a 3a fase
+    isStage3 = true
+
+    //Orientações iniciais
+    introductionStage = 'introductionStage3';
+    
+    //apresentação
     nameMaze0 = "Labirinto 3"
     nameMaze1 = "Cemiterio"
 
@@ -7,16 +14,6 @@ class Stage3 extends Stage {
 
     //Definir chão do labirinto
     keyBackground = 'bgStage3'
-
-
-    //existe armadilha estatica?
-    staticTrapExists = true
-
-    //existe armadilha dinâmica?
-    dynamicTrapExists = false
-
-    //Orientações iniciais
-    introductionStage = 'introductionStage3';
 
     //Definir formato do labirinto
     maze = [
@@ -48,7 +45,7 @@ class Stage3 extends Stage {
         [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 7, 3, 1, 1, 0, 0, 0, 1, 0, 1, 1, 4, 0, 1, 1, 1, 1, 1],
         [0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
         [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 4, 6, 0, 0, 0, 1],
-        [0, 0, 0, 0, 0, 0, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1],
         [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ]
     callNextScene() {

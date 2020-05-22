@@ -1,8 +1,12 @@
 class Stage1 extends Stage {
-    //zerar escores
-    scoreequalZero = true
+    
+    //Para comportamentos referentes a 1a fase
+    isStage1 = true
 
-    //apresentar Labirnto
+    ////Orientações iniciais
+    introductionStage = 'introductionStage1';
+
+    //Apresentaçãp
     nameMaze0 = "Labirinto 1"
     nameMaze1 = "Floresta"
 
@@ -11,15 +15,6 @@ class Stage1 extends Stage {
 
     //Definir chão do labirinto
     keyBackground = 'bgStage1'
-
-    //existe armadilha estatica?
-    staticTrapExistis = false
-
-    //existe armadilha dinâmica?
-    dynamicTrapExists = false
-
-    //Orientações iniciais
-    introductionStage = 'introductionStage1';
 
     //Definir formato do labirinto
     maze = [

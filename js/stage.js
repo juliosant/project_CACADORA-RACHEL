@@ -57,9 +57,14 @@ class Stage extends Phaser.Scene {
         });
 
         //:::::::Agrupar armadilhas::::::
-        this.traps = this.physics.add.group();
-        this.groupTrap = [];
-        this.posiytionTrap = 0;
+        if(this.isStage2){
+            this.obstacles = this.physics.add.group();
+        }
+        else if(this.isStage3){
+            this.obstacles = this.physics.add.staticGroup();
+        }
+        this.groupObstacle = [];
+        this.positionObstacle = 0;
 
         //::::::Instanciar objetos no labirinto::::::
         for (var row in this.maze) {
@@ -77,8 +82,8 @@ class Stage extends Phaser.Scene {
 
                 //::::::Instanciar player::::::
                 else if (this.tile === 2) {
-                    this.player = this.physics.add.sprite(x + 12.5, y + 12.5, 'player');
-                    this.player.setTint(0xcccccc);
+                    this.player = this.physics.add.sprite(x + 12.5, y + 12.5, 'player').setTint('0xeeeeee');
+                    //this.player.setTint(0xcccccc);
                     this.player.setBounce(1);
                     this.player.setCollideWorldBounds(true);
 
@@ -117,7 +122,7 @@ class Stage extends Phaser.Scene {
 
                 //::::::Instanciar moeda::::::
                 else if (this.tile === 3) {
-                    this.coins.create(x + 12.5, y + 12.5, 'coin').play('spin');
+                    this.coins.create(x + 12.5, y + 12.5, 'coin').play('spin').setScale(0.75);
                     this.qtdCoins += 1;
                 }
 
@@ -142,17 +147,15 @@ class Stage extends Phaser.Scene {
 
                 //::::::Instanciar armadilha::::::
                 if (this.tile === 7) {
-                    if (this.dynamicTrapExists) {
-                        this.groupTrap[this.posiytionTrap] = this.physics.add.image(x + 12.5, y + 12.5, 'spike-ball');
-                        this.traps.add(this.groupTrap[this.posiytionTrap]);
+                    if (this.isStage2) {
+                        this.groupObstacle[this.positionObstacle] = this.physics.add.image(x + 12.5, y + 12.5, 'spike-ball');
+                        this.obstacles.add(this.groupObstacle[this.positionObstacle]);
                     }
-                    else if (this.staticTrapExists) {
-                        this.groupTrap[this.posiytionTrap] = this.physics.add.image(x + 12.5, y + 12.5, 'tomb');
-                        this.traps.add(this.groupTrap[this.posiytionTrap]);
+                    else if (this.isStage3) {
+                        this.groupObstacle[this.positionObstacle] = this.obstacles.create(x + 12.5, y + 12.5, 'tomb');     
                         this.leverExists = true;
-                        this.tombsExists = true;
                     }
-                    this.posiytionTrap += 1;
+                    this.positionObstacle += 1;
                 }
                 //::::::Instanciar alavanca (Somente na 3a fase)::::::
                 if (this.tile === 8 && this.leverExists) {
@@ -178,16 +181,15 @@ class Stage extends Phaser.Scene {
         }, this);
 
         //::::::Botão para desativar armadilhas::::::
-        if (this.staticTrapExists) {
+        if (this.isStage3) {
             this.leverButton = this.add.image(962.5, 350, 'leverButton').setInteractive()
                 .setVisible(false);
             this.leverButton.on('pointerdown', function (pointer) {
                 this.leverButton.setTintFill(0xc7bf97, 0xfff3c9, 0xc7bf97);
                 let i;
-                let j = this.traps.getLength();
+                let j = this.obstacles.getLength();
                 for (i = 0; i < j; i++) {
-                    this.groupTrap[i].destroy();
-                    console.log(this.traps.getLength());
+                    this.destroyTomb(this.groupObstacle[i]);
                 }
                 this.leverButton.destroy();
 
@@ -196,14 +198,12 @@ class Stage extends Phaser.Scene {
 
 
         //:::::::Movimento das aradilhas dinâmicas:::::::
-        if (this.dynamicTrapExists) {
-
-
+        if (this.isStage2) {
 
             this.tween = this.tweens.add({
-                targets: this.groupTrap[0],
+                targets: this.groupObstacle[0],
 
-                x: this.groupTrap[0].x - 50,
+                x: this.groupObstacle[0].x - 50,
                 duration: 300,
                 ease: 'Power',
                 yoyo: true,
@@ -213,9 +213,9 @@ class Stage extends Phaser.Scene {
             });
 
             this.tween = this.tweens.add({
-                targets: this.groupTrap[1],
+                targets: this.groupObstacle[1],
 
-                y: this.groupTrap[1].y - 50,
+                y: this.groupObstacle[1].y - 50,
                 duration: 500,
                 ease: 'Power',
                 yoyo: true,
@@ -226,8 +226,8 @@ class Stage extends Phaser.Scene {
             });
 
             this.tween = this.tweens.add({
-                targets: this.groupTrap[2],
-                y: this.groupTrap[2].y + 70,
+                targets: this.groupObstacle[2],
+                y: this.groupObstacle[2].y + 70,
                 duration: 100,
                 ease: 'Power',
                 yoyo: true,
@@ -238,9 +238,9 @@ class Stage extends Phaser.Scene {
             });
 
             this.tween = this.tweens.add({
-                targets: this.groupTrap[3],
+                targets: this.groupObstacle[3],
 
-                x: this.groupTrap[3].x + 70,
+                x: this.groupObstacle[3].x + 70,
                 duration: 400,
                 ease: 'Power',
                 yoyo: true,
@@ -271,7 +271,7 @@ class Stage extends Phaser.Scene {
 
         //:::::::::::::::::::::::::::::INFORMAÇÔES DE NA PARTE DE CIMA DA TELA:::::::::::::::::::::::::::::
         //::::::Pontuação::::::
-        if(this.scoreequalZero){
+        if(this.isStage1){
             currentScore = 0
         }
         this.score = currentScore;
@@ -290,7 +290,7 @@ class Stage extends Phaser.Scene {
         //::::::Tempo::::::
         this.c = 150;
         this.clock = this.add.text(725, 10, 'Tempo: ' + this.c, { font: '12px emulogic', fill: '#ffa' });
-        this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.onEvent, callbackScope: this, loop: true });
+        this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.timer, callbackScope: this, loop: true });
 
         //:::::::::::::::::::::::::::::COLISÕES:::::::::::::::::::::::::::::
         //::::::Colisões simples::::::
@@ -302,14 +302,17 @@ class Stage extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.weapon, this.getWeapon, null, this);
         this.physics.add.overlap(this.bullets, this.enemies, this.hitShot, null, this);
         this.physics.add.overlap(this.bullets, this.platforms, this.missedShot, null, this);
-        if (this.dynamicTrapExists) {
-            this.physics.add.overlap(this.player, this.traps, this.damage, null, this);
+        if (this.isStage2) {
+            this.physics.add.overlap(this.player, this.obstacles, this.damage, null, this);
         }
-        else if (this.staticTrapExists) {
-            this.physics.add.overlap(this.player, this.traps, this.damage, null, this);
+        else if (this.isStage3) {
+            this.physics.add.collider(this.player, this.obstacles);
             this.physics.add.overlap(this.player, this.lever, this.getLever, null, this);
             this.tombFinal = this.physics.add.image(862.5, 87, 'tombFinal');
             this.physics.add.overlap(this.player, this.tombFinal, this.damage, null, this);
+            this.JulielText = this.add.text(800, 435, 'Juliel', {font: '12px emulogic', fill: '#ffffff'});
+            this.gameObjective = this.physics.add.image(840, 470,'objective');
+            this.physics.add.overlap(this.player, this.gameObjective, this.callNextStage, null, this);
         }
 
         //::::::::::::::::::::::::::ORIENTAÇÔES UMICIAIS DA FASE::::::::::::::::::::::::::
@@ -330,6 +333,14 @@ class Stage extends Phaser.Scene {
             this.introStage = false;
         }, this);
 
+        //::::::::::::::::::::Particulas:::::::::::::::
+        this.particles = this.add.particles('particles');
+        this.blood = this.add.particles('blood');
+        this.blockParticle = this.add.particles('blockParticle');
+        if(this.isStage3){
+            this.tombFinalParticle = this.add.particles('tombFinalParticle');
+            this.tombParticle = this.add.particles('tombParticle');
+        }
     }
 
     //:::::::Movimentação no controle virtual:::::::
@@ -399,7 +410,7 @@ class Stage extends Phaser.Scene {
         this.nameStage0.destroy();
         this.nameStage1.destroy();
     }
-    onEvent() {
+    timer() {
         if (this.introStage == false) {
             this.c--;
         }
@@ -415,16 +426,16 @@ class Stage extends Phaser.Scene {
             var enemyRow = Math.floor(enemy.y / 25);
             var validPath = [];
 
-            if (this.maze[enemyRow][enemyCol - 1] !== 1 && this.maze[enemyRow][enemyCol - 1] !== 6 && enemy.direction !== 'RIGHT') {
+            if (this.maze[enemyRow][enemyCol - 1] !== 1 && this.maze[enemyRow][enemyCol - 1] !== 6 && this.maze[enemyRow][enemyCol - 1] !== 7 && enemy.direction !== 'RIGHT') {
                 validPath.push('LEFT');
             }
-            if (this.maze[enemyRow][enemyCol + 1] !== 1 && this.maze[enemyRow][enemyCol + 1] !== 6 && enemy.direction !== 'LEFT') {
+            if (this.maze[enemyRow][enemyCol + 1] !== 1 && this.maze[enemyRow][enemyCol + 1] !== 6 && this.maze[enemyRow][enemyCol + 1] !== 7 && enemy.direction !== 'LEFT') {
                 validPath.push('RIGHT');
             }
-            if (this.maze[enemyRow - 1][enemyCol] !== 1 && this.maze[enemyRow - 1][enemyCol] !== 6 && enemy.direction !== 'DOWN') {
+            if (this.maze[enemyRow - 1][enemyCol] !== 1 && this.maze[enemyRow - 1][enemyCol] !== 6 && this.maze[enemyRow - 1][enemyCol] !== 7 && enemy.direction !== 'DOWN') {
                 validPath.push('UP');
             }
-            if (this.maze[enemyRow + 1][enemyCol] !== 1 && this.maze[enemyRow + 1][enemyCol] !== 6 && enemy.direction !== 'UP') {
+            if (this.maze[enemyRow + 1][enemyCol] !== 1 && this.maze[enemyRow + 1][enemyCol] !== 6 && this.maze[enemyRow + 1][enemyCol] !== 7 && enemy.direction !== 'UP') {
                 validPath.push('DOWN');
             }
 
@@ -480,16 +491,28 @@ class Stage extends Phaser.Scene {
         this.player.setTint(0xff0000);
         this.gameOver();
     }
-
     //Ativado ao colidir com moeda
     getCoin(player, coin) {
+        let a = coin.x;
+        let b = coin.y;
+        let emitter = this.particles.createEmitter({maxParticles: 15});
+        emitter.setPosition(a, b);
+        emitter.setSpeed(50);
+
         coin.disableBody(true, true);
+
+
 
         this.score += 10;
         this.scoreText.setText('Pontos: ' + this.score);
 
         this.qtdCoins -= 1
         if (this.qtdCoins == 0) {
+            a = this.tileEnd.x;
+            b = this.tileEnd.y;
+            emitter = this.blockParticle.createEmitter({maxParticles: 50});
+            emitter.setPosition(a, b);
+            emitter.setSpeed(50);
             this.tileEnd.disableBody(true);
             this.tileEnd.setVisible(false)
         }
@@ -503,6 +526,12 @@ class Stage extends Phaser.Scene {
     }
     //Ao acertar bala no inimigo
     hitShot(bullet, enemy) {
+        let x = enemy.x;
+        let y = enemy.y;
+        let emitter = this.blood.createEmitter({maxParticles: 15});
+        emitter.setPosition(x, y);
+        emitter.setSpeed(50);
+
         enemy.disableBody(true, true);
         bullet.disableBody(true, true);
         bullet.setActive(true);
@@ -512,8 +541,14 @@ class Stage extends Phaser.Scene {
 
         this.enemyPosition -= 1;
         //somente para fase 3
-        if (this.staticTrapExists) {
+        if (this.isStage3) {
             if (this.enemyPosition === 0) {
+                x = this.tombFinal.x;
+                y = this.tombFinal.y;
+                emitter = this.tombFinalParticle.createEmitter({maxParticles: 50});
+                emitter.setPosition(x, y);
+                emitter.setSpeed(50);
+                
                 this.tombFinal.disableBody(true);
                 this.tombFinal.setVisible(false)
             }
@@ -550,13 +585,22 @@ class Stage extends Phaser.Scene {
         this.c += 30;
 
     }
+    //Destruir as tumbas
+    destroyTomb(tomb){
+            let x = tomb.x;
+            let y = tomb.y;
+            let emitter = this.tombParticle.createEmitter({maxParticles: 50});
+            emitter.setPosition(x, y);
+            emitter.setSpeed(50);
 
+            tomb.destroy();
+    }
     //game over
     gameOver() {
         currentScore = 0
         this.scene.start('gameOver');
     }
-
+    //passou de fase
     callNextStage() {
         this.timedEvent.remove();
         //this.tempo = this.c;
@@ -564,7 +608,8 @@ class Stage extends Phaser.Scene {
 
         this.Congratulationtext = this.add.text(this.game.renderer.width/2, 200, 'Parabens!', {font: '35px emulogic', fill: '#ffffff'})
         .setOrigin(0.5);
-        if(this.staticTrapExists){
+        if(this.isStage3){
+            this.gameObjective.destroy();
             this.nextStageText = this.add.text((this.game.renderer.width/2)+10, 250, 'Voce consegui salvar Juliel!', {font: '20px emulogic', fill: '#ffffff'})
             .setOrigin(0.5);
             this.ScoreFinalStageText = this.add.text(this.game.renderer.width/2, 300, 'Pontuacao Final: '+ currentScore, {font: '20px emulogic', fill: '#ffffff'})
