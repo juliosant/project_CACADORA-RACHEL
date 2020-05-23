@@ -1,5 +1,7 @@
 class LoadScene extends Phaser.Scene {
     preload() {
+
+        //:::::::::::::::Carregar imagens e sprites:::::::::::::::::::::
         this.load.image('bg-control', 'assets/bg-control.png');
         this.load.image('bg-button', 'assets/bg-button.png');
 
@@ -41,15 +43,29 @@ class LoadScene extends Phaser.Scene {
         this.load.spritesheet('player', 'assets/player.png', { frameWidth: 20, frameHeight: 25 });
         this.load.spritesheet('enemy', 'assets/enemy.png', { frameWidth: 20, frameHeight: 25 });
         this.load.spritesheet('coin', 'assets/coin.png', { frameWidth: 25, frameHeight: 25 });
+        
+        this.load.image('keyboardGame', 'assets/keyboard.png');
+        this.load.image('joystick', 'assets/joystick.png');
 
+        //:::::::::::::::Carregar imagens e sprites:::::::::::::::::::::
+        this.load.audio('sndMenu', 'snd/menu.mp3');
+        //this.load.audio('sndStoryScene', 'snd/storyGame.mp3');
+        //this.load.audio('sndPresentation', 'snd/presentation.mp3');
+        this.load.audio('sndStage1', 'snd/stage1.mp3');
+        this.load.audio('sndStage2', 'snd/stage2.mp3');
+        this.load.audio('sndStage3', 'snd/stage3.mp3');
+        this.load.audio('victory', 'snd/victory.mp3');
+        this.load.audio('getCoin','snd/get_Coin.mp3');
+        this.load.audio('shoot', 'snd/shoot.mp3');
+        this.load.audio('explosion', 'snd/explosion.mp3');
+        //this.load.audio('sndGameOver','snd/game_Over.mp3');
+
+        //:::::::::::::::Carregar plugin para controle:::::::::::::::::::::
         var url;
             url = 'js/rexvirtualjoystickplugin.min.js';
              this.load.plugin('rexvirtualjoystickplugin', url, true);
         
         var movimentBullet; //armazenar direção da bala
-        
-        this.load.image('keyboardGame', 'assets/keyboard.png');
-        this.load.image('joystick', 'assets/joystick.png');
     }
     create(){
         this.scene.start('menu');

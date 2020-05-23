@@ -12,7 +12,12 @@ class MenuScene extends Phaser.Scene {
 			localStorage.setItem('rachel_highScore', highScore);
 		} else {
 			highScore = localStorage.getItem('rachel_highScore');
-		}
+        }
+        
+        this.sndMenu = this.sound.add('sndMenu');
+        this.sndMenu.loop = true;
+        this.sndMenu.play();
+
         this.input.addPointer();
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -44,21 +49,25 @@ class MenuScene extends Phaser.Scene {
         //:::::::::::::::::::::::::::::::::::::::::Apertar botões do menu:::::::::::::::::::::::::::::::::::::::::
         this.playButton.once('pointerdown', function () {
             this.playButton.setTintFill(0xcf70cf);
+            this.sndMenu.stop();
             this.time.addEvent({delay: 1000, callback: this.startGame, callbackScope: this, loop: false});
         }, this);
 
         this.infoButton.once('pointerdown', function () {
             this.infoButton.setTintFill(0xcf70cf);
+            this.sndMenu.stop();
             this.time.addEvent({delay: 500, callback: this.openInfo, callbackScope: this, loop: false});
         }, this);
         
         this.creditsButton.once('pointerdown', function () {
             this.creditsButton.setTintFill(0xcf70cf);
+            this.sndMenu.stop();
             this.time.addEvent({delay: 500, callback: this.openCredits, callbackScope: this, loop: false});
         }, this);
 
     }
     startGame(){
+
         this.scene.start('presentation');
     }
     openInfo(){

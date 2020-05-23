@@ -1,5 +1,14 @@
 class InitialPresentation extends Phaser.Scene {
+    preload(){
+        this.load.audio('sndPresentation', 'snd/presentation.mp3');
+    }
+    
     create() {
+
+        this.sndPresentation = this.sound.add('sndPresentation');
+        this.sndPresentation.loop = true;
+        this.sndPresentation.play();
+
         this.introductoryText0 = this.add.text(this.game.renderer.width / 2, 150, "A Srta Juliel foi raptada e",
             { font: '25px emulogic', fill: '#f7f2ad' }).setOrigin(0.5);
         this.introductoryText1 = this.add.text(this.game.renderer.width / 2, 200, "Levada ate o Cemiterio para sacrificio.",
@@ -52,6 +61,7 @@ class InitialPresentation extends Phaser.Scene {
         }, this);
     }
     callGame() {
+        this.sndPresentation.stop();
         this.scene.start('stage1');
     }
 

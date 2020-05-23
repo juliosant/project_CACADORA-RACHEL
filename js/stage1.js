@@ -1,9 +1,9 @@
 class Stage1 extends Stage {
     
     //Para comportamentos referentes a 1a fase
-    isStage1 = true
-
-    ////Orientações iniciais
+    isStage1 = true;
+    
+    //Orientações iniciais
     introductionStage = 'introductionStage1';
 
     //Apresentaçãp
@@ -15,7 +15,7 @@ class Stage1 extends Stage {
 
     //Definir chão do labirinto
     keyBackground = 'bgStage1'
-
+    
     //Definir formato do labirinto
     maze = [
 
@@ -46,10 +46,20 @@ class Stage1 extends Stage {
         [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 3, 0, 4, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1],
         [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1],
         [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1],
-        [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 3, 1, 1, 0, 1, 0, 6],
+        [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 4, 3, 1, 1, 0, 1, 0, 6],
         [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ]
 
+    activeSound(){
+        this.sndStage = this.sound.add('sndStage1'); 
+        this.sndStage.setVolume(0.5);
+        this.sndStage.loop = true;
+        this.sndStage.play();
+    }
+    desactiveSound(){
+        this.sndStage.stop();
+        this.sndStage.stop();
+    }
     
     callNextScene() {
         this.scene.start('stage2')

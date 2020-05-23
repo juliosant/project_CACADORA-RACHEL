@@ -1,6 +1,7 @@
 class Stage3 extends Stage {
+
     //Para comportamentos referentes a 3a fase
-    isStage3 = true
+    isStage3 = true;
 
     //Orientações iniciais
     introductionStage = 'introductionStage3';
@@ -14,6 +15,7 @@ class Stage3 extends Stage {
 
     //Definir chão do labirinto
     keyBackground = 'bgStage3'
+    
 
     //Definir formato do labirinto
     maze = [
@@ -48,6 +50,18 @@ class Stage3 extends Stage {
         [0, 0, 0, 0, 0, 0, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1],
         [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ]
+
+    activeSound(){
+        this.sndStage = this.sound.add('sndStage3'); 
+        this.sndStage.setVolume(0.5);
+        this.sndStage.loop = true;
+        this.sndStage.play();
+    }
+    desactiveSound(){
+        this.sndStage.stop();
+        this.sndStage.stop();
+    }
+
     callNextScene() {
         this.scene.start('final')
     }

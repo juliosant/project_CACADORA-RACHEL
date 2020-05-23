@@ -1,10 +1,18 @@
 class GameOverScene extends Phaser.Scene{
+    preload(){
+        this.load.audio('sndGameOver','snd/game_Over.mp3');
+    }
+    
     create(){
+        this.sndGameOver = this.sound.add('sndGameOver');
+        this.sndGameOver.loop = false;
+        this.sndGameOver.play();
+
         this.gameOverText = this.add.text(this.game.renderer.width/2, 525, 'GAME OVER!', 
         {font: '37px emulogic', fill: '#f7f2ad'})
         .setOrigin(0.5);
         this.clock = 1;
-        this.time.addEvent({delay: 5000, callback: this.backToMenu, callbackScope: this, loop: false});
+        this.time.addEvent({delay: 15000, callback: this.backToMenu, callbackScope: this, loop: false});
 
         this.tween = this.tweens.add({
             targets: this.gameOverText,

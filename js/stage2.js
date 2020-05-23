@@ -1,7 +1,7 @@
 class Stage2 extends Stage {
-    
+  
     //Para comportamentos referentes a 2a fase
-    isStage2 = true
+    isStage2 = true;
 
     //Orientações iniciais
     introductionStage = 'introductionStage2';
@@ -48,6 +48,17 @@ class Stage2 extends Stage {
         [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ]
+
+    activeSound(){
+        this.sndStage = this.sound.add('sndStage2'); 
+        this.sndStage.setVolume(0.5);
+        this.sndStage.loop = true;
+        this.sndStage.play();
+    }
+    desactiveSound(){
+        this.sndStage.stop();
+        this.sndStage.stop()
+    }
 
     callNextScene() {
         this.scene.start('stage3')

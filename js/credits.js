@@ -1,5 +1,9 @@
 class CreditsScene extends Phaser.Scene{
     create(){
+        this.sndCredits = this.sound.add('sndMenu');
+        this.sndCredits.loop = true;
+        this.sndCredits.play();
+
         this.credits =  this.add.text(this.game.renderer.width/2, 50, 'Creditos', {font: '25px emulogic', fill: '#f7f2ad'})
         .setOrigin(0.5);
         this.textCreator =  this.add.text(this.game.renderer.width/2, 150, 'Inspirado em uma garota da Uni7', {font: '25px emulogic', fill: '#ff55aa'})
@@ -32,6 +36,7 @@ class CreditsScene extends Phaser.Scene{
         //:::::::::::::::::::::::::::::::::::::::::Apertar botões do menu:::::::::::::::::::::::::::::::::::::::::
         this.quitButton.once('pointerdown', function () {
             this.quitButton.setTintFill(0xcf70cf);
+            this.sndCredits.stop();
             this.time.addEvent({delay: 500, callback: this.backToMenu, callbackScope: this});
         }, this);
     }

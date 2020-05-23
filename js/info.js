@@ -1,5 +1,8 @@
 class InfoScene extends Phaser.Scene{
     create(){
+        this.sndInfo = this.sound.add('sndMenu');
+        this.sndInfo.loop = true;
+        this.sndInfo.play();
         this.info =  this.add.text(this.game.renderer.width/2, 50, 'Informacoes', {font: '25px emulogic', fill: '#f7f2ad'})
         .setOrigin(0.5);
         this.infoControl =  this.add.text(150, 150, 'Informacoes de controle:', {font: '18px emulogic', fill: '#ff5500'})
@@ -33,12 +36,14 @@ class InfoScene extends Phaser.Scene{
         //:::::::::::::::::::::::::::::::::::::::::Voltar ao menu:::::::::::::::::::::::::::::::::::::::::
         this.quitButton.once('pointerdown', function () {
             this.quitButton.setTintFill(0xcf70cf);
+            this.sndInfo.stop();
             this.time.addEvent({delay: 500, callback: this.backToMenu, callbackScope: this});
         }, this);
 
         //:::::::::::::::::::::::::::::::::::::::::Lea a estória:::::::::::::::::::::::::::::::::::::::::
         this.storyGame.once('pointerdown', function () {
             this.storyGame.setTintFill(0xcf70cf);
+            this.sndInfo.stop();
             this.time.addEvent({delay: 500, callback: this.readTheStory, callbackScope: this});
         }, this);
     }

@@ -1,4 +1,5 @@
 class Stage extends Phaser.Scene {
+
     create() {
 
         this.moviment;
@@ -56,16 +57,17 @@ class Stage extends Phaser.Scene {
             repeat: -1
         });
 
-        //:::::::Agrupar armadilhas::::::
-        if(this.isStage2){
+        //:::::::Agrupar obstáculos::::::
+        if (this.isStage2) {
             this.obstacles = this.physics.add.group();
         }
-        else if(this.isStage3){
+        else if (this.isStage3) {
             this.obstacles = this.physics.add.staticGroup();
         }
         this.groupObstacle = [];
         this.positionObstacle = 0;
 
+        //:::::::::::::::::::::::::::INSTÂNCIAS:::::::::::::::::::::::::::::::::::::::
         //::::::Instanciar objetos no labirinto::::::
         for (var row in this.maze) {
             for (var col in this.maze[row]) {
@@ -152,7 +154,7 @@ class Stage extends Phaser.Scene {
                         this.obstacles.add(this.groupObstacle[this.positionObstacle]);
                     }
                     else if (this.isStage3) {
-                        this.groupObstacle[this.positionObstacle] = this.obstacles.create(x + 12.5, y + 12.5, 'tomb');     
+                        this.groupObstacle[this.positionObstacle] = this.obstacles.create(x + 12.5, y + 12.5, 'tomb');
                         this.leverExists = true;
                     }
                     this.positionObstacle += 1;
@@ -164,6 +166,25 @@ class Stage extends Phaser.Scene {
             }
         }
 
+ 
+        //this.activeSound();
+
+        //:::::::Instanciar som de moeda:::::::
+        this.sndCoin = this.sound.add('getCoin');
+        this.sndCoin.loop = false;
+        //:::::::Instanciar som de tiro:::::::
+        this.sndShoot = this.sound.add('shoot');
+        this.sndShoot.loop = false;
+        //:::::::Instanciar som de tiro:::::::
+        this.sndExplosion = this.sound.add('explosion');
+        this.sndExplosion.loop = false;
+        //:::::::Instanciar som de Vitória:::::::
+        this.sndVictory = this.sound.add('victory');
+        this.sndVictory.setVolume(0.4);
+        this.sndVictory.loop = false;
+        this.sndVictory.play();
+        this.sndVictory.pause();
+
         //:::::::::::::::::::::::::BOTÔES:::::::::::::::::::::::::::
         //::::::Botão de tiro::::::
         this.weaponButton = this.add.image(962.5, 250, 'weaponButton').setInteractive();
@@ -174,19 +195,21 @@ class Stage extends Phaser.Scene {
             this.weaponButton.setTintFill(0xc7bf97, 0xfff3c9, 0xc7bf97);
             this.bullets.fireBullet(this.player.x, this.player.y);
             this.oneBulletLess(this.weaponButton);
+            this.sndShoot.play();
         }, this);
 
         this.weaponButton.on('pointerup', function (pointer) {
             this.weaponButton.clearTint();
         }, this);
 
-        //::::::Botão para desativar armadilhas::::::
+        //::::::Botão para desativar obstaculos::::::
         if (this.isStage3) {
             this.leverButton = this.add.image(962.5, 350, 'leverButton').setInteractive()
                 .setVisible(false);
             this.leverButton.on('pointerdown', function (pointer) {
                 this.leverButton.setTintFill(0xc7bf97, 0xfff3c9, 0xc7bf97);
                 let i;
+                this.sndExplosion.play();
                 let j = this.obstacles.getLength();
                 for (i = 0; i < j; i++) {
                     this.destroyTomb(this.groupObstacle[i]);
@@ -197,7 +220,7 @@ class Stage extends Phaser.Scene {
         }
 
 
-        //:::::::Movimento das aradilhas dinâmicas:::::::
+        //:::::::Movimento das obstáculos móveis:::::::
         if (this.isStage2) {
 
             this.tween = this.tweens.add({
@@ -271,7 +294,7 @@ class Stage extends Phaser.Scene {
 
         //:::::::::::::::::::::::::::::INFORMAÇÔES DE NA PARTE DE CIMA DA TELA:::::::::::::::::::::::::::::
         //::::::Pontuação::::::
-        if(this.isStage1){
+        if (this.isStage1) {
             currentScore = 0
         }
         this.score = currentScore;
@@ -310,8 +333,8 @@ class Stage extends Phaser.Scene {
             this.physics.add.overlap(this.player, this.lever, this.getLever, null, this);
             this.tombFinal = this.physics.add.image(862.5, 87, 'tombFinal');
             this.physics.add.overlap(this.player, this.tombFinal, this.damage, null, this);
-            this.JulielText = this.add.text(800, 435, 'Juliel', {font: '12px emulogic', fill: '#ffffff'});
-            this.gameObjective = this.physics.add.image(840, 470,'objective');
+            this.JulielText = this.add.text(800, 435, 'Juliel', { font: '12px emulogic', fill: '#ffffff' });
+            this.gameObjective = this.physics.add.image(840, 470, 'objective');
             this.physics.add.overlap(this.player, this.gameObjective, this.callNextStage, null, this);
         }
 
@@ -337,7 +360,7 @@ class Stage extends Phaser.Scene {
         this.particles = this.add.particles('particles');
         this.blood = this.add.particles('blood');
         this.blockParticle = this.add.particles('blockParticle');
-        if(this.isStage3){
+        if (this.isStage3) {
             this.tombFinalParticle = this.add.particles('tombFinalParticle');
             this.tombParticle = this.add.particles('tombParticle');
         }
@@ -493,9 +516,10 @@ class Stage extends Phaser.Scene {
     }
     //Ativado ao colidir com moeda
     getCoin(player, coin) {
+        this.sndCoin.play();
         let a = coin.x;
         let b = coin.y;
-        let emitter = this.particles.createEmitter({maxParticles: 15});
+        let emitter = this.particles.createEmitter({ maxParticles: 15 });
         emitter.setPosition(a, b);
         emitter.setSpeed(50);
 
@@ -508,11 +532,14 @@ class Stage extends Phaser.Scene {
 
         this.qtdCoins -= 1
         if (this.qtdCoins == 0) {
+            this.sndExplosion.play();
+
             a = this.tileEnd.x;
             b = this.tileEnd.y;
-            emitter = this.blockParticle.createEmitter({maxParticles: 50});
+            emitter = this.blockParticle.createEmitter({ maxParticles: 50 });
             emitter.setPosition(a, b);
             emitter.setSpeed(50);
+
             this.tileEnd.disableBody(true);
             this.tileEnd.setVisible(false)
         }
@@ -528,7 +555,7 @@ class Stage extends Phaser.Scene {
     hitShot(bullet, enemy) {
         let x = enemy.x;
         let y = enemy.y;
-        let emitter = this.blood.createEmitter({maxParticles: 15});
+        let emitter = this.blood.createEmitter({ maxParticles: 15 });
         emitter.setPosition(x, y);
         emitter.setSpeed(50);
 
@@ -543,12 +570,14 @@ class Stage extends Phaser.Scene {
         //somente para fase 3
         if (this.isStage3) {
             if (this.enemyPosition === 0) {
+                this.sndExplosion.play();
+
                 x = this.tombFinal.x;
                 y = this.tombFinal.y;
-                emitter = this.tombFinalParticle.createEmitter({maxParticles: 50});
+                emitter = this.tombFinalParticle.createEmitter({ maxParticles: 50 });
                 emitter.setPosition(x, y);
                 emitter.setSpeed(50);
-                
+
                 this.tombFinal.disableBody(true);
                 this.tombFinal.setVisible(false)
             }
@@ -586,43 +615,48 @@ class Stage extends Phaser.Scene {
 
     }
     //Destruir as tumbas
-    destroyTomb(tomb){
-            let x = tomb.x;
-            let y = tomb.y;
-            let emitter = this.tombParticle.createEmitter({maxParticles: 50});
-            emitter.setPosition(x, y);
-            emitter.setSpeed(50);
+    destroyTomb(tomb) {
+        let x = tomb.x;
+        let y = tomb.y;
+        let emitter = this.tombParticle.createEmitter({ maxParticles: 50 });
+        emitter.setPosition(x, y);
+        emitter.setSpeed(50);
 
-            tomb.destroy();
+        tomb.destroy();
     }
     //game over
     gameOver() {
+        //this.desactiveSound();
         currentScore = 0
         this.scene.start('gameOver');
     }
+
     //passou de fase
     callNextStage() {
+        //this.desactiveSound();
+        
+        this.time.addEvent({delay: 1000, callback: this.musicVictory, callbackScope: this, loop: false});
+
         this.timedEvent.remove();
         //this.tempo = this.c;
         currentScore = this.score + this.c;
 
-        this.Congratulationtext = this.add.text(this.game.renderer.width/2, 200, 'Parabens!', {font: '35px emulogic', fill: '#ffffff'})
-        .setOrigin(0.5);
-        if(this.isStage3){
+        this.Congratulationtext = this.add.text(this.game.renderer.width / 2, 200, 'Parabens!', { font: '35px emulogic', fill: '#ffffff' })
+            .setOrigin(0.5);
+        if (this.isStage3) {
             this.gameObjective.destroy();
-            this.nextStageText = this.add.text((this.game.renderer.width/2)+10, 250, 'Voce consegui salvar Juliel!', {font: '20px emulogic', fill: '#ffffff'})
-            .setOrigin(0.5);
-            this.ScoreFinalStageText = this.add.text(this.game.renderer.width/2, 300, 'Pontuacao Final: '+ currentScore, {font: '20px emulogic', fill: '#ffffff'})
-            .setOrigin(0.5);
+            this.nextStageText = this.add.text((this.game.renderer.width / 2) + 10, 250, 'Voce conseguiu salvar Juliel!', { font: '20px emulogic', fill: '#ffffff' })
+                .setOrigin(0.5);
+            this.ScoreFinalStageText = this.add.text(this.game.renderer.width / 2, 300, 'Pontuacao Final: ' + currentScore, { font: '20px emulogic', fill: '#ffffff' })
+                .setOrigin(0.5);
         }
-        else{
-            this.nextStageText = this.add.text((this.game.renderer.width/2)+10, 250, 'Voce avancou para o proximo labirinto', {font: '20px emulogic', fill: '#ffffff'})
-            .setOrigin(0.5);
-            this.ScoreFinalStageText = this.add.text(this.game.renderer.width/2, 300, 'Pontuacao: '+ currentScore, {font: '20px emulogic', fill: '#ffffff'})
-            .setOrigin(0.5);
+        else {
+            this.nextStageText = this.add.text((this.game.renderer.width / 2) + 10, 250, 'Voce avancou para o proximo labirinto', { font: '20px emulogic', fill: '#ffffff' })
+                .setOrigin(0.5);
+            this.ScoreFinalStageText = this.add.text(this.game.renderer.width / 2, 300, 'Pontuacao: ' + currentScore, { font: '20px emulogic', fill: '#ffffff' })
+                .setOrigin(0.5);
         }
-        
-        this.time.addEvent({ delay: 4000, callback: this.callNextScene, callbackScope: this, loop: false })
+        this.time.addEvent({ delay: 5000, callback: this.callNextScene, callbackScope: this, loop: false })
         if (this.enemies.getLength() > 0) {
             for (let a = 0; a < this.enemies.getLength(); a++) {
                 this.groupEnemies[a].disableBody(true, true);
@@ -630,7 +664,10 @@ class Stage extends Phaser.Scene {
         }
         this.joyStick.setVisible(false)
         this.player.disableBody(true, true);
-        
+        this.weaponButton.setVisible(false);
+    }
+    musicVictory() {
+        this.sndVictory.resume();
     }
 
 }
