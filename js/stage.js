@@ -130,10 +130,18 @@ class Stage extends Phaser.Scene {
 
                 //::::::Instanciar inimigos::::::
                 else if (this.tile === 4) {
-                    this.groupEnemies[this.enemyPosition] = this.physics.add.sprite(x + 12.5, y + 12.5, 'enemy').setTint('0xff5555');
+                    this.groupEnemies[this.enemyPosition] = this.physics.add.sprite(x + 12.5, y + 12.5, 'enemy').setTint('0xff5588');
                     this.groupEnemies[this.enemyPosition].setCollideWorldBounds(true);
                     this.enemies.add(this.groupEnemies[this.enemyPosition]);
+                    if(this.isStage2){
+                        this.groupEnemies[this.enemyPosition].setTint('0xffaa00 ')
+                    }
+
+                    if(this.isStage3){
+                        this.groupEnemies[this.enemyPosition].setTint('0xdd55ff')
+                    }
                     this.enemyPosition += 1;
+                    
                 }
 
                 //::::::Instanciar arma::::::
@@ -611,7 +619,7 @@ class Stage extends Phaser.Scene {
     getLever(player, lever) {
         lever.disableBody(true, true);
         this.leverButton.setVisible(true);
-        this.c += 30;
+        this.c += 45;
 
     }
     //Destruir as tumbas
@@ -643,6 +651,8 @@ class Stage extends Phaser.Scene {
 
         this.Congratulationtext = this.add.text(this.game.renderer.width / 2, 200, 'Parabens!', { font: '35px emulogic', fill: '#ffffff' })
             .setOrigin(0.5);
+
+        
         if (this.isStage3) {
             this.gameObjective.destroy();
             this.nextStageText = this.add.text((this.game.renderer.width / 2) + 10, 250, 'Voce conseguiu salvar Juliel!', { font: '20px emulogic', fill: '#ffffff' })
@@ -651,6 +661,13 @@ class Stage extends Phaser.Scene {
                 .setOrigin(0.5);
         }
         else {
+            if(this.isStage2){
+                let i = 0
+                let j = this.obstacles.getLength();
+                for(i = 0; i < j; i++){
+                    this.groupObstacle[i].destroy();
+                }
+            }
             this.nextStageText = this.add.text((this.game.renderer.width / 2) + 10, 250, 'Voce avancou para o proximo labirinto', { font: '20px emulogic', fill: '#ffffff' })
                 .setOrigin(0.5);
             this.ScoreFinalStageText = this.add.text(this.game.renderer.width / 2, 300, 'Pontuacao: ' + currentScore, { font: '20px emulogic', fill: '#ffffff' })

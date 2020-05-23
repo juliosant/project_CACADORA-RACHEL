@@ -1,5 +1,9 @@
 class FinalScene extends Phaser.Scene {
     create() {
+        this.sndFinal = this.sound.add('sndFinal');
+        this.sndFinal.loop = false;
+        this.sndFinal.play();
+
         this.finalText1 = this.add.text(this.game.renderer.width / 2, 200,
             "Voce conseguiu salvar Juliel!",
             { font: '23px emulogic', fill: '#f7f2ad' }).setOrigin(0.5);

@@ -1,7 +1,7 @@
 class StoryGameScene extends Phaser.Scene{
-    preload(){
+    /*preload(){
         this.load.audio('sndStoryScene', 'snd/storyGame.mp3');
-    }
+    }*/
     
     create(){
         this.sndStory = this.sound.add('sndStoryScene');

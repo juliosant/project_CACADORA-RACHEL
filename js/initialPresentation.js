@@ -2,6 +2,7 @@ class InitialPresentation extends Phaser.Scene {
     preload(){
         this.load.audio('sndPresentation', 'snd/presentation.mp3');
         this.load.audio('sndGameOver','snd/game_Over.mp3');
+        this.load.audio('sndFinal', 'snd/final.mp3');
     }
     
     create() {

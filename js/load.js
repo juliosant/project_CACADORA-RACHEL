@@ -49,15 +49,15 @@ class LoadScene extends Phaser.Scene {
 
         //:::::::::::::::Carregar imagens e sprites:::::::::::::::::::::
         this.load.audio('sndMenu', 'snd/menu.mp3');
-        //this.load.audio('sndStoryScene', 'snd/storyGame.mp3');
+        this.load.audio('sndStoryScene', 'snd/storyGame.mp3');
         //this.load.audio('sndPresentation', 'snd/presentation.mp3');
-        this.load.audio('sndStage1', 'snd/stage1.mp3');
+        /*this.load.audio('sndStage1', 'snd/stage1.mp3');
         this.load.audio('sndStage2', 'snd/stage2.mp3');
-        this.load.audio('sndStage3', 'snd/stage3.mp3');
-        this.load.audio('victory', 'snd/victory.mp3');
+        this.load.audio('sndStage3', 'snd/stage3.mp3');*/
+        /*this.load.audio('victory', 'snd/victory.mp3');
         this.load.audio('getCoin','snd/get_Coin.mp3');
         this.load.audio('shoot', 'snd/shoot.mp3');
-        this.load.audio('explosion', 'snd/explosion.mp3');
+        this.load.audio('explosion', 'snd/explosion.mp3');*/
         //this.load.audio('sndGameOver','snd/game_Over.mp3');
 
         //:::::::::::::::Carregar plugin para controle:::::::::::::::::::::
