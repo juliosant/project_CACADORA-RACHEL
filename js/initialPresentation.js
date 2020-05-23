@@ -1,6 +1,7 @@
 class InitialPresentation extends Phaser.Scene {
     preload(){
         this.load.audio('sndPresentation', 'snd/presentation.mp3');
+        this.load.audio('sndGameOver','snd/game_Over.mp3');
     }
     
     create() {
@@ -62,7 +63,12 @@ class InitialPresentation extends Phaser.Scene {
     }
     callGame() {
         this.sndPresentation.stop();
-        this.scene.start('stage1');
+        //this.scene.start('stage1');
+        textHere = 'stage1'
+        texPresnetationHere = 'LABIRINTO DA FLORESTA'
+        this.scene.start('stageText')
     }
 
 }
+var textHere
+var texPresnetationHere

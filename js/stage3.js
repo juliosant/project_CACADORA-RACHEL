@@ -56,10 +56,12 @@ class Stage3 extends Stage {
         this.sndStage.setVolume(0.5);
         this.sndStage.loop = true;
         this.sndStage.play();
+        this.sndStage.pause();
+        this.sndStage.resume();
     }
     desactiveSound(){
         this.sndStage.stop();
-        this.sndStage.stop();
+        //this.sndStage.stop();
     }
 
     callNextScene() {

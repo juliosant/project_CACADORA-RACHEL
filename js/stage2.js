@@ -54,13 +54,19 @@ class Stage2 extends Stage {
         this.sndStage.setVolume(0.5);
         this.sndStage.loop = true;
         this.sndStage.play();
+        this.sndStage.pause();
+        this.sndStage.resume();
+
     }
     desactiveSound(){
         this.sndStage.stop();
-        this.sndStage.stop()
+
     }
 
     callNextScene() {
-        this.scene.start('stage3')
+        textHere = 'stage3'
+        texPresnetationHere = 'LABIRINTO DO CEMITERIO'
+        this.scene.start('stageText')
+        //this.scene.start('stage3')
     }
 }

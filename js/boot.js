@@ -4,6 +4,7 @@ class BootScene extends Phaser.Scene {
         this.scene.add('load', LoadScene);
         this.scene.add('menu', MenuScene);
             this.scene.add('presentation', InitialPresentation);
+            this.scene.add('stageText', StageTextScene);
             this.scene.add('stage1', Stage1);
             this.scene.add('stage2', Stage2);
             this.scene.add('stage3', Stage3);

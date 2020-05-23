@@ -67,7 +67,6 @@ class MenuScene extends Phaser.Scene {
 
     }
     startGame(){
-
         this.scene.start('presentation');
     }
     openInfo(){

@@ -1,7 +1,4 @@
 class GameOverScene extends Phaser.Scene{
-    preload(){
-        this.load.audio('sndGameOver','snd/game_Over.mp3');
-    }
     
     create(){
         this.sndGameOver = this.sound.add('sndGameOver');

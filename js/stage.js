@@ -167,7 +167,7 @@ class Stage extends Phaser.Scene {
         }
 
  
-        //this.activeSound();
+        this.activeSound();
 
         //:::::::Instanciar som de moeda:::::::
         this.sndCoin = this.sound.add('getCoin');
@@ -626,14 +626,14 @@ class Stage extends Phaser.Scene {
     }
     //game over
     gameOver() {
-        //this.desactiveSound();
+        this.desactiveSound();
         currentScore = 0
         this.scene.start('gameOver');
     }
 
     //passou de fase
     callNextStage() {
-        //this.desactiveSound();
+        this.desactiveSound();
         
         this.time.addEvent({delay: 1000, callback: this.musicVictory, callbackScope: this, loop: false});
 
@@ -672,3 +672,4 @@ class Stage extends Phaser.Scene {
 
 }
 movimentBullet = 'down';
+
