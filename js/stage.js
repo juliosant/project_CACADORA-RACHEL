@@ -133,15 +133,15 @@ class Stage extends Phaser.Scene {
                     this.groupEnemies[this.enemyPosition] = this.physics.add.sprite(x + 12.5, y + 12.5, 'enemy').setTint('0xff5588');
                     this.groupEnemies[this.enemyPosition].setCollideWorldBounds(true);
                     this.enemies.add(this.groupEnemies[this.enemyPosition]);
-                    if(this.isStage2){
+                    if (this.isStage2) {
                         this.groupEnemies[this.enemyPosition].setTint('0xffaa00 ')
                     }
 
-                    if(this.isStage3){
+                    if (this.isStage3) {
                         this.groupEnemies[this.enemyPosition].setTint('0xdd55ff')
                     }
                     this.enemyPosition += 1;
-                    
+
                 }
 
                 //::::::Instanciar arma::::::
@@ -174,7 +174,7 @@ class Stage extends Phaser.Scene {
             }
         }
 
- 
+
         this.activeSound();
 
         //:::::::Instanciar som de moeda:::::::
@@ -372,6 +372,7 @@ class Stage extends Phaser.Scene {
             this.tombFinalParticle = this.add.particles('tombFinalParticle');
             this.tombParticle = this.add.particles('tombParticle');
         }
+
     }
 
     //:::::::Movimentação no controle virtual:::::::
@@ -642,36 +643,45 @@ class Stage extends Phaser.Scene {
     //passou de fase
     callNextStage() {
         this.desactiveSound();
-        
-        this.time.addEvent({delay: 1000, callback: this.musicVictory, callbackScope: this, loop: false});
+
+        this.time.addEvent({ delay: 1000, callback: this.musicVictory, callbackScope: this, loop: false });
 
         this.timedEvent.remove();
         //this.tempo = this.c;
         currentScore = this.score + this.c;
 
-        this.Congratulationtext = this.add.text(this.game.renderer.width / 2, 200, 'Parabens!', { font: '35px emulogic', fill: '#ffffff' })
+        this.Congratulationtext = this.add.text(this.game.renderer.width / 2, 150, 'Parabens!', { font: '35px emulogic', fill: '#ffffff' })
             .setOrigin(0.5);
 
-        
+
         if (this.isStage3) {
             this.gameObjective.destroy();
-            this.nextStageText = this.add.text((this.game.renderer.width / 2) + 10, 250, 'Voce conseguiu salvar Juliel!', { font: '20px emulogic', fill: '#ffffff' })
+            this.nextStageText = this.add.text((this.game.renderer.width / 2) + 10, 200, 'Voce conseguiu salvar Juliel!', { font: '20px emulogic', fill: '#ffffff' })
                 .setOrigin(0.5);
-            this.ScoreFinalStageText = this.add.text(this.game.renderer.width / 2, 300, 'Pontuacao Final: ' + currentScore, { font: '20px emulogic', fill: '#ffffff' })
+            this.ScoreFinalStageText = this.add.text(this.game.renderer.width / 2, 250, 'Pts acumulados: ' + this.score, { font: '20px emulogic', fill: '#ffffff' })
+                .setOrigin(0.5);
+            this.ScoreFinalStageText = this.add.text(this.game.renderer.width / 2, 300, 'Tempo restante: ' + this.c, { font: '20px emulogic', fill: '#ffffff' })
+                .setOrigin(0.5);
+            this.ScoreFinalStageText = this.add.text(this.game.renderer.width / 2, 350, 'Pontuacao Final: ' + currentScore, { font: '20px emulogic', fill: '#ffffff' })
                 .setOrigin(0.5);
         }
         else {
-            if(this.isStage2){
+            if (this.isStage2) {
                 let i = 0
                 let j = this.obstacles.getLength();
-                for(i = 0; i < j; i++){
+                for (i = 0; i < j; i++) {
                     this.groupObstacle[i].destroy();
                 }
             }
-            this.nextStageText = this.add.text((this.game.renderer.width / 2) + 10, 250, 'Voce avancou para o proximo labirinto', { font: '20px emulogic', fill: '#ffffff' })
+            this.nextStageText = this.add.text((this.game.renderer.width / 2) + 10, 200, 'Voce avancou para o proximo labirinto', { font: '20px emulogic', fill: '#ffffff' })
                 .setOrigin(0.5);
-            this.ScoreFinalStageText = this.add.text(this.game.renderer.width / 2, 300, 'Pontuacao: ' + currentScore, { font: '20px emulogic', fill: '#ffffff' })
+            this.ScoreFinalStageText = this.add.text(this.game.renderer.width / 2, 250, 'Pts acumulados: ' + this.score, { font: '20px emulogic', fill: '#ffffff' })
                 .setOrigin(0.5);
+            this.ScoreFinalStageText = this.add.text(this.game.renderer.width / 2, 300, 'Tempo restante: ' + this.c, { font: '20px emulogic', fill: '#ffffff' })
+                .setOrigin(0.5);
+            this.ScoreFinalStageText = this.add.text(this.game.renderer.width / 2, 350, 'Total: ' + currentScore, { font: '20px emulogic', fill: '#ffffff' })
+                .setOrigin(0.5);
+
         }
         this.time.addEvent({ delay: 5000, callback: this.callNextScene, callbackScope: this, loop: false })
         if (this.enemies.getLength() > 0) {
