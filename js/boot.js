@@ -1,4 +1,5 @@
 class BootScene extends Phaser.Scene {
+    
     create(){
         this.scene.add('boot', BootScene);
         this.scene.add('load', LoadScene);

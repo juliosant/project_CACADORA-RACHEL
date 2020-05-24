@@ -65,6 +65,8 @@ class Stage3 extends Stage {
     }
 
     callNextScene() {
+        this.sndVictory.stop();
+
         this.scene.start('final')
     }
 }

@@ -10,6 +10,7 @@ class GameOverScene extends Phaser.Scene{
         .setOrigin(0.5);
         this.clock = 1;
         this.time.addEvent({delay: 15000, callback: this.backToMenu, callbackScope: this, loop: false});
+        this.time.addEvent({delay: 2500, callback: this.gameOverMotive, callbackScope: this, loop: false});
 
         this.tween = this.tweens.add({
             targets: this.gameOverText,
@@ -18,11 +19,17 @@ class GameOverScene extends Phaser.Scene{
             y: this.game.renderer.height/2,
 
         });
+        
     }
     backToMenu(){
         this.clock--;
         if(this.clock === 0){
+            this.sndGameOver.stop();
             this.scene.start('menu')
         }
+    }
+    gameOverMotive(){
+        this.gameOverTextMotive = this.add.text(this.game.renderer.width/2, 350, textGameOverHere,
+            {font: '20px emulogic', fill: '#f7f2ad'}).setOrigin(0.5);
     }
 }

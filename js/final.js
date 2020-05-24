@@ -14,13 +14,15 @@ class FinalScene extends Phaser.Scene {
 
         this.time.addEvent({ delay: 4000, callback: this.ThankYouRachel, callbackScope: this, loop: false });
 
-        this.add.sprite(495, 400, 'rachel').setScale(0.7);;
-        this.add.image(525, 403, 'juliel').setScale(0.7);
-
+        this.rachel = this.add.sprite(495, 400, 'rachel').setScale(0.7);;
+        this.juliel = this.add.image(525, 403, 'juliel').setScale(0.7);
+        
+        this.isRecordist = false
         if(currentScore > highScore){
             highScore = currentScore;
             this.recordText = this.add.text(this.game.renderer.width / 2, 475,'Voce eh o novo recordista com '+ currentScore + 'pts',
             { font: '15px emulogic', fill: '#ff55AA' }).setOrigin(0.5);
+            this.isRecordist = true
         }
 
     }
@@ -40,11 +42,26 @@ class FinalScene extends Phaser.Scene {
             repeat: -1
 
         });
-        this.time.addEvent({ delay: 20000, callback: this.callBackToMenu, callbackScope: this, loop: false });
+        this.time.addEvent({ delay: 10000, callback: this.endGame, callbackScope: this, loop: false });
+
+    }
+    endGame(){
+        this.ThankYouRachelText.destroy();
+        this.rachel.destroy();
+        this.juliel.destroy();
+        if(this.isRecordist){
+            this.recordText.destroy()
+        }
+
+        this.endText = this.add.text(this.game.renderer.width / 2, this.game.renderer.height/2,
+            "FIM!", { font: '37px emulogic', fill: '#f7f2ad' }).setOrigin(0.5);
+        
+            this.time.addEvent({ delay: 5000, callback: this.callBackToMenu, callbackScope: this, loop: false });
 
     }
 
     callBackToMenu(){
+        this.sndFinal.stop();
         this.scene.start('menu');
     }
 

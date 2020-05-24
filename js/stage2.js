@@ -64,6 +64,7 @@ class Stage2 extends Stage {
     }
 
     callNextScene() {
+        this.sndVictory.stop();
         textHere = 'stage3'
         texPresnetationHere = 'LABIRINTO DO CEMITERIO'
         this.scene.start('stageText')

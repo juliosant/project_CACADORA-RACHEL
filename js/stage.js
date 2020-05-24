@@ -202,7 +202,7 @@ class Stage extends Phaser.Scene {
         this.weaponButton.on('pointerdown', function (pointer) {
             this.weaponButton.setTintFill(0xc7bf97, 0xfff3c9, 0xc7bf97);
             this.bullets.fireBullet(this.player.x, this.player.y);
-            this.oneBulletLess(this.weaponButton);
+            //this.oneBulletLess(this.weaponButton);
             this.sndShoot.play();
         }, this);
 
@@ -395,9 +395,12 @@ class Stage extends Phaser.Scene {
     }
 
     update() {
+        //fase so inicia após fechar a mensagem de orientação da fase
         if (this.introStage == false) {
+            //Ateração do time em tempo real
             this.clock.setText('Tempo: ' + this.c);
 
+            //anteração da pontuação em tempo real
             this.scoreText.setText('Pontos: ' + this.score)
             //::::::::::::::::::::ANIMAÇÃO DO INIMIGO::::::::::::::::::::
             let a;
@@ -437,17 +440,20 @@ class Stage extends Phaser.Scene {
         }
     }
 
+    //Referente a apresentacao da fase
     endOfStagePresentation() {
 
         this.nameStage0.destroy();
         this.nameStage1.destroy();
     }
+    //Metodo para diminuir o tempo do tempo
     timer() {
         if (this.introStage == false) {
             this.c--;
         }
         if (this.c === 0) {
             this.timedEvent.remove(false);
+            textGameOverHere = 'Acabou o tempo'
             this.gameOver();
         }
     }
@@ -518,9 +524,10 @@ class Stage extends Phaser.Scene {
 
     //:::::::::::Colisões reativas::::::::::::
     //Ativado quando player colidir com inimigo/armadilha
-    damage(/*player, enemy*/) {
+    damage() {
         this.physics.pause();
         this.player.setTint(0xff0000);
+        textGameOverHere = 'Voce morreu'
         this.gameOver();
     }
     //Ativado ao colidir com moeda
@@ -559,6 +566,24 @@ class Stage extends Phaser.Scene {
         this.getWeaponObject.setVisible(false);
         this.weaponButton.setVisible(true);
         this.amunitionBulletText.setVisible(true);
+
+        if(this.isStage3){
+            this.atentionMsg0 = this.add.text(this.game.renderer.width/2, this.game.renderer.height/2, ' Atencao!',{
+                font: '25px emulogic', fill: '#00aa00'
+            }).setOrigin(0.5);
+            this.atentionMsg1 = this.add.text(this.game.renderer.width/2, (this.game.renderer.height/2)+50, ' Voce so pode errar 1 bala',{
+                font: '25px emulogic', fill: '#00aa00'
+            }).setOrigin(0.5);
+
+            this.time.addEvent({delay: 3500, callback: this.destroyMsg, callbackScope: this, loop: false})
+            
+        }
+        
+    }
+    //Somente no estágio 3 usada somente pelo metodo getWapon na 3a fase
+    destroyMsg(){
+        this.atentionMsg0.destroy();
+        this.atentionMsg1.destroy()
     }
     //Ao acertar bala no inimigo
     hitShot(bullet, enemy) {
@@ -591,15 +616,17 @@ class Stage extends Phaser.Scene {
                 this.tombFinal.setVisible(false)
             }
         }
+        this.oneBulletLess(this.weaponButton);
     }
     //Sumir com a bala ao atirar contra o bloco
     missedShot(bullet, tile) {
         bullet.disableBody(true, true);
         bullet.setActive(true);
+        this.oneBulletLess(this.weaponButton);
     }
 
     //Uma bala a menos ao atirar
-    oneBulletLess(button) {
+    oneBulletLess(button) { 
         this.amunitionBullet -= 1;
 
         if (this.amunitionBullet === 1) {
@@ -613,6 +640,22 @@ class Stage extends Phaser.Scene {
             button.setVisible(false);
             this.amunitionBulletText.setVisible(false);
             this.noBullets.setVisible(true);
+        }
+
+        //Para informar que tem menos balas que monstros
+        if(this.isStage3){
+            if(this.enemyPosition > this.amunitionBullet){
+                this.player.disableBody(true, true);
+                this.weaponButton.setVisible(false);
+                textGameOverHere = 'Municao insuficientes para esta etapa'
+                
+                this.add.text(this.game.renderer.width/2, this.game.renderer.height/2, ' Menos balas que monstros',
+                {font: '30px emulogic', fill: '#ff0000'}).setOrigin(0.5);
+                this.add.text(this.game.renderer.width/2, (this.game.renderer.height/2)+50, '  encapuzados',
+                {font: '30px emulogic', fill: '#ff0000'}).setOrigin(0.5);
+
+                this.time.addEvent({delay: 3500, callback: this.gameOver, callbackScope: this, loop: false})
+            }
         }
     }
 
@@ -693,6 +736,8 @@ class Stage extends Phaser.Scene {
         this.player.disableBody(true, true);
         this.weaponButton.setVisible(false);
     }
+
+    //musica da vitoria
     musicVictory() {
         this.sndVictory.resume();
     }
@@ -700,3 +745,4 @@ class Stage extends Phaser.Scene {
 }
 movimentBullet = 'down';
 
+var textGameOverHere = ''
