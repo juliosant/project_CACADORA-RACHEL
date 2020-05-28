@@ -22,7 +22,6 @@ class InitialPresentation extends Phaser.Scene {
 
         this.buttonForNext = this.add.text(700, 450, "[Continuar]", { font: '20px emulogic', fill: '#f7f2ad' }).setInteractive();
 
-        //this.add.sprite(200, 380,'rachel').setScale(0.5);
         this.monster1 = this.add.image(462, 380, 'monster').setScale(0.5).setTint('0xff5555');
         this.juliel = this.add.image(512, 400, 'juliel').setScale(0.5);
         this.monster2 = this.add.image(562, 380, 'monster').setScale(0.5).setTint('0xff5555');
@@ -35,7 +34,7 @@ class InitialPresentation extends Phaser.Scene {
 
     }
     Next() {
-        // this.scene.start('stage1');
+
         this.introductoryText0.destroy()
         this.introductoryText1.destroy()
         this.introductoryText2.destroy()
@@ -64,7 +63,6 @@ class InitialPresentation extends Phaser.Scene {
     }
     callGame() {
         this.sndPresentation.stop();
-        //this.scene.start('stage1');
         textHere = 'stage1'
         texPresnetationHere = 'LABIRINTO DA FLORESTA'
         this.scene.start('stageText')

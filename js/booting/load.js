@@ -1,6 +1,6 @@
 class LoadScene extends Phaser.Scene {
     preload() {
-        this.ScoreFinalStageText = this.add.text(this.game.renderer.width / 2, 200, 'CARREGANDO...', { font: '25px emulogic', fill: '#f7f2ad' })
+        this.ScoreFinalStageText = this.add.text(this.game.renderer.width / 2, 200, 'CARREGANDO', { font: '25px emulogic', fill: '#f7f2ad' })
         .setOrigin(0.5);
 
         this.time.addEvent({delay:500, callback: this.visible1, callbackScope: this, loop: false});
@@ -54,7 +54,7 @@ class LoadScene extends Phaser.Scene {
         this.load.image('keyboardGame', 'assets/keyboard.png');
         this.load.image('joystick', 'assets/joystick.png');
 
-        //:::::::::::::::Carregar imagens e sprites:::::::::::::::::::::
+        //:::::::::::::::Carregar sons:::::::::::::::::::::
         this.load.audio('sndMenu', 'snd/menu.mp3');
         this.load.audio('sndStoryScene', 'snd/storyGame.mp3');
         //this.load.audio('sndPresentation', 'snd/presentation.mp3');
@@ -70,28 +70,26 @@ class LoadScene extends Phaser.Scene {
 
         //:::::::::::::::Carregar plugin para controle:::::::::::::::::::::
         var url;
-            url = 'js/rexvirtualjoystickplugin.min.js';
+            url = 'js/components/rexvirtualjoystickplugin.min.js';
              this.load.plugin('rexvirtualjoystickplugin', url, true);
         
         var movimentBullet; //armazenar direção da bala
 
     }
     visible1(){
-        this.ScoreFinalStageText = this.add.text((this.game.renderer.width / 2)-150, 250, ':(', { font: '25px emulogic', fill: '#f7f2ad' })
+        this.ScoreFinalStageText = this.add.text((this.game.renderer.width / 2)-150, 270, ':(', { font: '25px emulogic', fill: '#f7f2ad' })
         .setOrigin(0.5);
     }
     visible2(){
-        this.ScoreFinalStageText = this.add.text((this.game.renderer.width / 2)-50, 250, ':|', { font: '25px emulogic', fill: '#f7f2ad' })
+        this.ScoreFinalStageText = this.add.text((this.game.renderer.width / 2)-50, 270, ':|', { font: '25px emulogic', fill: '#f7f2ad' })
         .setOrigin(0.5);
     }
     visible3(){
-        this.ScoreFinalStageText = this.add.text((this.game.renderer.width / 2)+50, 250, ':)', { font: '25px emulogic', fill: '#f7f2ad' })
+        this.ScoreFinalStageText = this.add.text((this.game.renderer.width / 2)+50, 270, ':)', { font: '25px emulogic', fill: '#f7f2ad' })
         .setOrigin(0.5);
     }
     visible4(){
-        this.ScoreFinalStageText = this.add.text((this.game.renderer.width / 2)+150, 250, ':D', { font: '25px emulogic', fill: '#f7f2ad' })
-        .setOrigin(0.5);
-        this.ScoreFinalStageText = this.add.text((this.game.renderer.width / 2), 400, 'COMPLETO!!!', { font: '25px emulogic', fill: '#f7f2ad' })
+        this.ScoreFinalStageText = this.add.text((this.game.renderer.width / 2)+150, 270, ':D', { font: '25px emulogic', fill: '#f7f2ad' })
         .setOrigin(0.5);
     }
 

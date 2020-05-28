@@ -1,7 +1,4 @@
 class StoryGameScene extends Phaser.Scene{
-    /*preload(){
-        this.load.audio('sndStoryScene', 'snd/storyGame.mp3');
-    }*/
     
     create(){
         this.sndStory = this.sound.add('sndStoryScene');
@@ -9,8 +6,7 @@ class StoryGameScene extends Phaser.Scene{
         this.sndStory.play();
 
         this.add.image(this.game.renderer.width/2, this.game.renderer.height/2, 'bgStage2')
-        .setScale(1.5)
-        /*.setTintFill(0x333333)*/;
+        .setScale(1.5);
 
         this.info =  this.add.text(this.game.renderer.width/2, 50, 'Historia', {font: '25px emulogic', fill: '#f7f2ad'})
         .setOrigin(0.5);

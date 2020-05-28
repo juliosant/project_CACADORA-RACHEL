@@ -2,6 +2,10 @@
 
 
 
+* Link do jogo: https://gamejolt.com/games/cacadorachel/497781
+
+  
+
 ## Motivação
 
 Desenvolver um game que permita ampliar meus conhecimentos em projetos e programação no geral. Desenvolver um jogo cuja personagem principal é inspirado em uma pessoa real.
@@ -35,6 +39,8 @@ O jogo terá 3 etapas (Labirintos).
 ## Esquema de Pontuação
 
 Haverá moedas no caminho que somam pontuação (10pts/moeda). Uma vez pega todas as moedas, abrirá então passagem para próxima etapa.  Também soma pontos ao matar os monstros (20pts/monstro). Ao fim de cada etapa o tempo restante é somado a pontuação total.
+
+
 
 ## Requisitos
 

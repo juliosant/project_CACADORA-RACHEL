@@ -1,5 +1,5 @@
 class Stage extends Phaser.Scene {
-
+    //Método para criar todas as instãncias do jogo
     create() {
 
         this.moviment;
@@ -7,18 +7,19 @@ class Stage extends Phaser.Scene {
         this.force;
         this.introStage = true;
 
-        //::::::Backrounds::::::
+        //::::::::::::::::::::::BACKGROUNDS::::::::::::::::::::::
         this.add.image(150 / 2, 275, 'bg-control');
         this.add.image(962.5, 275, 'bg-button');
         this.add.image(525, 275, this.keyBackground);
 
-        //::::::Agrupar blocos:::::::
+        //::::::::::::::::::::::GRUPOS E ANIMAÇÕES::::::::::::::::::::::
+        //Agrupar blocos
         this.platforms = this.physics.add.staticGroup();
 
-        //::::::Agrupar moedas:::::::
+        //Agrupar moedas
         this.coins = this.physics.add.group();
         this.qtdCoins = 0
-        //::::::Animação da moeda::::::
+        //Animação da moeda
         this.anims.create({
             key: 'spin',
             frames: this.anims.generateFrameNumbers('coin', { start: 0, end: 9 }),
@@ -26,12 +27,12 @@ class Stage extends Phaser.Scene {
             repeat: -1,
         });
 
-        //::::::Agrupar inimigos::::::
+        //Agrupar inimigos
         this.enemies = this.physics.add.group();
         this.groupEnemies = [];
         this.enemyPosition = 0;
 
-        //::::::Animação do inimigo::::::
+        //Animação do inimigo
         this.anims.create({
             key: 'goLeft',
             frames: this.anims.generateFrameNumbers('enemy', { start: 16, end: 23 }),
@@ -57,18 +58,20 @@ class Stage extends Phaser.Scene {
             repeat: -1
         });
 
-        //:::::::Agrupar obstáculos::::::
+        //:::::::Agrupar obstáculos
+        //Na fase 2 (com movimentos)
         if (this.isStage2) {
-            this.obstacles = this.physics.add.group();
+            this.createObstacles()
         }
+        //Na fase 3 (sem movimentos)
         else if (this.isStage3) {
-            this.obstacles = this.physics.add.staticGroup();
+            this.createObstacles()
         }
         this.groupObstacle = [];
         this.positionObstacle = 0;
 
-        //:::::::::::::::::::::::::::INSTÂNCIAS:::::::::::::::::::::::::::::::::::::::
-        //::::::Instanciar objetos no labirinto::::::
+        //::::::::::::::::::::::INSTÂNCIAS::::::::::::::::::::::
+        //:::::::Instanciar objetos no labirinto
         for (var row in this.maze) {
             for (var col in this.maze[row]) {
                 this.tile = this.maze[row][col]
@@ -76,20 +79,20 @@ class Stage extends Phaser.Scene {
                 var x = col * 25;
                 var y = row * 25;
 
-                //::::::Instanciar blocos::::::
+                //Instanciar blocos
                 if (this.tile === 1) {
 
                     this.platforms.create(x + 12.5, y + 12.5, this.keyBlock);
                 }
 
-                //::::::Instanciar player::::::
+                //Instanciar player
                 else if (this.tile === 2) {
                     this.player = this.physics.add.sprite(x + 12.5, y + 12.5, 'player').setTint('0xeeeeee');
                     //this.player.setTint(0xcccccc);
                     this.player.setBounce(1);
                     this.player.setCollideWorldBounds(true);
 
-                    //::::::Animação do player::::::
+                    //Animação do player
                     this.anims.create({
                         key: 'left',
                         frames: this.anims.generateFrameNumbers('player', { start: 17, end: 23 }),
@@ -122,13 +125,13 @@ class Stage extends Phaser.Scene {
 
                 }
 
-                //::::::Instanciar moeda::::::
+                //Instanciar moeda
                 else if (this.tile === 3) {
                     this.coins.create(x + 12.5, y + 12.5, 'coin').play('spin').setScale(0.75);
                     this.qtdCoins += 1;
                 }
 
-                //::::::Instanciar inimigos::::::
+                //Instanciar inimigos
                 else if (this.tile === 4) {
                     this.groupEnemies[this.enemyPosition] = this.physics.add.sprite(x + 12.5, y + 12.5, 'enemy').setTint('0xff5588');
                     this.groupEnemies[this.enemyPosition].setCollideWorldBounds(true);
@@ -144,21 +147,22 @@ class Stage extends Phaser.Scene {
 
                 }
 
-                //::::::Instanciar arma::::::
+                //Instanciar arma
                 else if (this.tile === 5) {
                     this.weapon = this.physics.add.image(x + 12.5, y + 12.5, 'weapon');
                 }
 
-                //::::::Instanciar barreira::::::
+                //Instanciar barreira
                 if (this.tile === 6) {
 
                     this.tileEnd = this.platforms.create(x + 12.5, y + 12.5, 'blockend').setScale(1.5);
                 }
-
-                //::::::Instanciar armadilha::::::
+                //:::::::SOMENTE NAS FASES 2 E 3
+                //Instanciar obstáculos
                 if (this.tile === 7) {
                     if (this.isStage2) {
-                        this.groupObstacle[this.positionObstacle] = this.physics.add.image(x + 12.5, y + 12.5, 'spike-ball');
+                        this.groupObstacle[this.positionObstacle] = this.physics.add.image(x + 12.5, y + 12.5, 'spike-ball')
+                        .setScale(0.8);
                         this.obstacles.add(this.groupObstacle[this.positionObstacle]);
                     }
                     else if (this.isStage3) {
@@ -167,7 +171,7 @@ class Stage extends Phaser.Scene {
                     }
                     this.positionObstacle += 1;
                 }
-                //::::::Instanciar alavanca (Somente na 3a fase)::::::
+                //Instanciar alavanca (Somente na 3a fase)
                 if (this.tile === 8 && this.leverExists) {
                     this.lever = this.physics.add.image(x + 12.5, y + 12.5, 'lever');
                 }
@@ -175,8 +179,123 @@ class Stage extends Phaser.Scene {
         }
 
 
-        this.activeSound();
+        //::::::::::::::::::::::BOTÔES::::::::::::::::::::::
+        //Botão de tiro
+        this.weaponButton = this.add.image(962.5, 250, 'weaponButton').setInteractive();
+        this.weaponButton.setVisible(false);
+        this.bullets = new Bullets(this);
 
+        this.weaponButton.on('pointerdown', function (pointer) {
+            this.weaponButton.setTintFill(0xc7bf97, 0xfff3c9, 0xc7bf97);
+            this.bullets.fireBullet(this.player.x, this.player.y);
+            this.sndShoot.play();
+        }, this);
+
+
+        this.weaponButton.on('pointerup', function (pointer) {
+            this.weaponButton.clearTint();
+        }, this);
+
+        //Botão para desativar obstaculos - somene na 3a fase
+        if (this.isStage3) {
+            this.createLeverButton()
+        }
+
+        //Movimento das obstáculos móveis
+        if (this.isStage2) {
+            this.movimentOfObstacles()
+        }
+
+        //::::::::::::::::::::::RECURSO DE ENTRADA::::::::::::::::::::::
+        //Instancia de teclado
+        this.cursors = this.input.keyboard.createCursorKeys();
+
+        //Instancia do controle virtual
+        this.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
+            x: 75,
+            y: 275,
+            radius: 34,
+            base: this.add.circle(0, 0, 68, 0xc7bf97),
+            thumb: this.add.circle(0, 0, 36, 0xfff3c9),
+
+        })
+            .on('update', this.dumpJoyStickState, this);
+
+        this.text = this.add.text(0, 0);
+        this.dumpJoyStickState();
+
+
+        //::::::::::::::::::::::INFORMAÇÔES DE STATUS::::::::::::::::::::::
+        //Pontuação
+        if (this.isStage1) {
+            this.resetScore()
+        }
+        this.score = currentScore;
+        this.scoreText = this.add.text(175, 10, 'Pontos: ' + this.score, { font: '12px emulogic', fill: '#ffa' });
+
+        //::Situação de armamento
+        this.amunitionBullet = 7;
+        //Situação 1
+        this.getWeaponObject = this.add.text(400, 10, '[Pegue a Arma!]', { font: '12px emulogic', fill: '#a0a0a0' })
+        //Situação 2
+        this.amunitionBulletText = this.add.text(400, 10, 'Municao: ' + this.amunitionBullet + ' balas', { font: '12px emulogic', fill: '#f5a460' });
+        this.amunitionBulletText.setVisible(false);
+        //Situação 3
+        this.noBullets = this.add.text(425, 10, 'Sem balas!', { font: '12px emulogic', fill: '#aa0000' }).setVisible(false);
+
+        //Tempo
+        this.c = 150;
+        this.clock = this.add.text(725, 10, 'Tempo: ' + this.c, { font: '12px emulogic', fill: '#ffa' });
+        this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.timer, callbackScope: this, loop: true });
+
+        //::::::::::::::::::::::COLISÕES::::::::::::::::::::::
+        //Colisões simples
+        this.physics.add.collider(this.player, this.platforms);
+        this.physics.add.collider(this.enemies, this.platforms);
+        //Colisões reativas
+        this.physics.add.overlap(this.player, this.coins, this.getCoin, null, this);
+        this.physics.add.overlap(this.player, this.enemies, this.damage, null, this);
+        this.physics.add.overlap(this.player, this.weapon, this.getWeapon, null, this);
+        this.physics.add.overlap(this.bullets, this.enemies, this.hitShot, null, this);
+        this.physics.add.overlap(this.bullets, this.platforms, this.missedShot, null, this);
+        if (this.isStage2) {
+            this.collidersStage()
+        }
+        else if (this.isStage3) {
+            this.createInstancesOfStage();
+            this.collidersStage();
+        }
+
+        //::::::::::::::::::::::ORIENTAÇÔES INICIAIS DA FASE::::::::::::::::::::::
+        //Imagem de orientação
+        this.introductingStage = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 2, this.introductionStage);
+        //Botão para fechar orientação da fase
+        this.closeintroductionButton = this.add.text(420, 400, '[Fechar]', { font: '20px emulogic', fill: '#f7f2ad' }).setInteractive();
+        this.closeintroductionButton.once('pointerdown', function (pointer) {
+            this.closeintroductionButton.destroy();
+            this.introductingStage.destroy();
+            //::::::::::::::::::::::APRESENTAÇÂO DO LABIRINTO::::::::::::::::::::::
+            //Mostrado apenas depois da montagem do labirinto
+            this.nameStage0 = this.add.text(512, 250, this.nameMaze0, { font: '15px emulogic', fill: '#ffffff' })
+                .setOrigin(0.5);
+            this.nameStage1 = this.add.text(512, 300, this.nameMaze1, { font: '37px emulogic', fill: '#ffffff' })
+                .setOrigin(0.5);
+            this.presentationTime = this.time.addEvent({ delay: 3000, callback: this.endOfStagePresentation, callbackScope: this, loop: false })
+            this.introStage = false;
+        }, this);
+
+        //::::::::::::::::::::::PARTÍCULAS::::::::::::::::::::::
+        this.particles = this.add.particles('particles');
+        this.blood = this.add.particles('blood');
+        this.blockParticle = this.add.particles('blockParticle');
+        if (this.isStage3) {
+            //criar particulas das Tumbas
+            this.createParticlesOfObstacles()
+        }
+
+        //::::::::::::::::::::::AUDIOS:::::::::::::::::::::::::
+        //:::::::Instanciar som da fase:::::::
+        this.activeSound();
         //:::::::Instanciar som de moeda:::::::
         this.sndCoin = this.sound.add('getCoin');
         this.sndCoin.loop = false;
@@ -193,207 +312,9 @@ class Stage extends Phaser.Scene {
         this.sndVictory.play();
         this.sndVictory.pause();
 
-        //:::::::::::::::::::::::::BOTÔES:::::::::::::::::::::::::::
-        //::::::Botão de tiro::::::
-        this.weaponButton = this.add.image(962.5, 250, 'weaponButton').setInteractive();
-        this.weaponButton.setVisible(false);
-        this.bullets = new Bullets(this);
-
-        this.weaponButton.on('pointerdown', function (pointer) {
-            this.weaponButton.setTintFill(0xc7bf97, 0xfff3c9, 0xc7bf97);
-            this.bullets.fireBullet(this.player.x, this.player.y);
-            //this.oneBulletLess(this.weaponButton);
-            this.sndShoot.play();
-        }, this);
-
-        this.weaponButton.on('pointerup', function (pointer) {
-            this.weaponButton.clearTint();
-        }, this);
-
-        //::::::Botão para desativar obstaculos::::::
-        if (this.isStage3) {
-            this.leverButton = this.add.image(962.5, 350, 'leverButton').setInteractive()
-                .setVisible(false);
-            this.leverButton.on('pointerdown', function (pointer) {
-                this.leverButton.setTintFill(0xc7bf97, 0xfff3c9, 0xc7bf97);
-                let i;
-                this.sndExplosion.play();
-                let j = this.obstacles.getLength();
-                for (i = 0; i < j; i++) {
-                    this.destroyTomb(this.groupObstacle[i]);
-                }
-                this.leverButton.destroy();
-
-            }, this);
-        }
-
-
-        //:::::::Movimento das obstáculos móveis:::::::
-        if (this.isStage2) {
-
-            this.tween = this.tweens.add({
-                targets: this.groupObstacle[0],
-
-                x: this.groupObstacle[0].x - 50,
-                duration: 300,
-                ease: 'Power',
-                yoyo: true,
-                loop: -1,
-                loopDelay: 2500,
-
-            });
-
-            this.tween = this.tweens.add({
-                targets: this.groupObstacle[1],
-
-                y: this.groupObstacle[1].y - 50,
-                duration: 500,
-                ease: 'Power',
-                yoyo: true,
-                loop: -1,
-                loopDelay: 1500,
-
-
-            });
-
-            this.tween = this.tweens.add({
-                targets: this.groupObstacle[2],
-                y: this.groupObstacle[2].y + 70,
-                duration: 100,
-                ease: 'Power',
-                yoyo: true,
-                loop: -1,
-                loopDelay: 2500,
-
-
-            });
-
-            this.tween = this.tweens.add({
-                targets: this.groupObstacle[3],
-
-                x: this.groupObstacle[3].x + 70,
-                duration: 400,
-                ease: 'Power',
-                yoyo: true,
-                loop: -1,
-                loopDelay: 1500,
-
-            });
-        }
-
-        //:::::::::::::::::::RECURSO DE ENTRADA:::::::::::::::::::
-        //:::::::Instancia de teclado:::::::
-        this.cursors = this.input.keyboard.createCursorKeys();
-
-        //::::::Instancia do controle virtual::::::
-        this.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
-            x: 75,
-            y: 275,
-            radius: 34,
-            base: this.add.circle(0, 0, 68, 0xc7bf97),
-            thumb: this.add.circle(0, 0, 36, 0xfff3c9),
-
-        })
-            .on('update', this.dumpJoyStickState, this);
-
-        this.text = this.add.text(0, 0);
-        this.dumpJoyStickState();
-
-
-        //:::::::::::::::::::::::::::::INFORMAÇÔES DE NA PARTE DE CIMA DA TELA:::::::::::::::::::::::::::::
-        //::::::Pontuação::::::
-        if (this.isStage1) {
-            currentScore = 0
-        }
-        this.score = currentScore;
-        this.scoreText = this.add.text(175, 10, 'Pontos: ' + this.score, { font: '12px emulogic', fill: '#ffa' });
-
-        //::::::Situação de armamento::::::
-        this.amunitionBullet = 7;
-        //::::::Situação 1
-        this.getWeaponObject = this.add.text(400, 10, '[Pegue a Arma!]', { font: '12px emulogic', fill: '#a0a0a0' })
-        //::::::Situação 2
-        this.amunitionBulletText = this.add.text(400, 10, 'Municao: ' + this.amunitionBullet + ' balas', { font: '12px emulogic', fill: '#f5a460' });
-        this.amunitionBulletText.setVisible(false);
-        //::::::Situação 3
-        this.noBullets = this.add.text(425, 10, 'Sem balas!', { font: '12px emulogic', fill: '#aa0000' }).setVisible(false);
-
-        //::::::Tempo::::::
-        this.c = 150;
-        this.clock = this.add.text(725, 10, 'Tempo: ' + this.c, { font: '12px emulogic', fill: '#ffa' });
-        this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.timer, callbackScope: this, loop: true });
-
-        //:::::::::::::::::::::::::::::COLISÕES:::::::::::::::::::::::::::::
-        //::::::Colisões simples::::::
-        this.physics.add.collider(this.player, this.platforms);
-        this.physics.add.collider(this.enemies, this.platforms);
-        //::::::Colisões reativas::::::
-        this.physics.add.overlap(this.player, this.coins, this.getCoin, null, this);
-        this.physics.add.overlap(this.player, this.enemies, this.damage, null, this);
-        this.physics.add.overlap(this.player, this.weapon, this.getWeapon, null, this);
-        this.physics.add.overlap(this.bullets, this.enemies, this.hitShot, null, this);
-        this.physics.add.overlap(this.bullets, this.platforms, this.missedShot, null, this);
-        if (this.isStage2) {
-            this.physics.add.overlap(this.player, this.obstacles, this.damage, null, this);
-        }
-        else if (this.isStage3) {
-            this.physics.add.collider(this.player, this.obstacles);
-            this.physics.add.overlap(this.player, this.lever, this.getLever, null, this);
-            this.tombFinal = this.physics.add.image(862.5, 87, 'tombFinal');
-            this.physics.add.overlap(this.player, this.tombFinal, this.damage, null, this);
-            this.JulielText = this.add.text(800, 435, 'Juliel', { font: '12px emulogic', fill: '#ffffff' });
-            this.gameObjective = this.physics.add.image(840, 470, 'objective');
-            this.physics.add.overlap(this.player, this.gameObjective, this.callNextStage, null, this);
-        }
-
-        //::::::::::::::::::::::::::ORIENTAÇÔES UMICIAIS DA FASE::::::::::::::::::::::::::
-        //:::::::Imagem de orientação
-        this.introductingStage = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 2, this.introductionStage);
-        //:::::::Botão para fechar orientação da fase
-        this.closeintroductionButton = this.add.text(420, 400, '[Fechar]', { font: '20px emulogic', fill: '#f7f2ad' }).setInteractive();
-        this.closeintroductionButton.once('pointerdown', function (pointer) {
-            this.closeintroductionButton.destroy();
-            this.introductingStage.destroy();
-            //:::::::Apresentacao do labirinto:::::::
-            //:::::::Mostrado apenas depois da montagem do labirinto
-            this.nameStage0 = this.add.text(512, 250, this.nameMaze0, { font: '15px emulogic', fill: '#ffffff' })
-                .setOrigin(0.5);
-            this.nameStage1 = this.add.text(512, 300, this.nameMaze1, { font: '37px emulogic', fill: '#ffffff' })
-                .setOrigin(0.5);
-            this.presentationTime = this.time.addEvent({ delay: 3000, callback: this.endOfStagePresentation, callbackScope: this, loop: false })
-            this.introStage = false;
-        }, this);
-
-        //::::::::::::::::::::Particulas:::::::::::::::
-        this.particles = this.add.particles('particles');
-        this.blood = this.add.particles('blood');
-        this.blockParticle = this.add.particles('blockParticle');
-        if (this.isStage3) {
-            this.tombFinalParticle = this.add.particles('tombFinalParticle');
-            this.tombParticle = this.add.particles('tombParticle');
-        }
-
     }
 
-    //:::::::Movimentação no controle virtual:::::::
-    dumpJoyStickState() {
-        var cursorKeys = this.joyStick.createCursorKeys();
-        var s = /*'Key down: '*/'';
-        for (var name in cursorKeys) {
-            if (cursorKeys[name].isDown) {
-                //s += name + ' ';
-                this.moviment = name;
-            }
-        }
-        this.force = Math.floor(this.joyStick.force * 100) / 100;
-        this.angle = Math.floor(this.joyStick.angle * 100) / 100;
-
-        if (this.force === 0 && this.angle === 0) {
-            this.moviment = null;
-        }
-        this.text.setText(s);
-    }
-
+    //Método para atualização em tempo real de funcionalidades do jogo
     update() {
         //fase so inicia após fechar a mensagem de orientação da fase
         if (this.introStage == false) {
@@ -440,7 +361,7 @@ class Stage extends Phaser.Scene {
         }
     }
 
-    //Referente a apresentacao da fase
+    //Eliminar apresentação inicial da fase
     endOfStagePresentation() {
 
         this.nameStage0.destroy();
@@ -457,7 +378,7 @@ class Stage extends Phaser.Scene {
             this.gameOver();
         }
     }
-    //:::::::::::::Andar do inimigo:::::::::::::
+    //Andar do inimigo
     moveEnemy(enemy) {
         if (Math.floor(enemy.x - 12.5) % 25 === 0 && Math.floor(enemy.y - 12.5) % 25 === 0) {
             var enemyCol = Math.floor(enemy.x / 25);
@@ -500,7 +421,7 @@ class Stage extends Phaser.Scene {
 
         }
     }
-    //:::::::::::::Andar:::::::::::::
+    //Andar do player
     goLeft() {
         this.player.setVelocityX(-80);
         this.player.anims.play('left', true);
@@ -521,8 +442,26 @@ class Stage extends Phaser.Scene {
         this.player.anims.play('down', true);
         movimentBullet = 'down';
     }
+    //Movimentação no controle virtual
+    dumpJoyStickState() {
+        var cursorKeys = this.joyStick.createCursorKeys();
+        var s = /*'Key down: '*/'';
+        for (var name in cursorKeys) {
+            if (cursorKeys[name].isDown) {
+                //s += name + ' ';
+                this.moviment = name;
+            }
+        }
+        this.force = Math.floor(this.joyStick.force * 100) / 100;
+        this.angle = Math.floor(this.joyStick.angle * 100) / 100;
 
-    //:::::::::::Colisões reativas::::::::::::
+        if (this.force === 0 && this.angle === 0) {
+            this.moviment = null;
+        }
+        this.text.setText(s);
+    }
+
+    //::::::::::::::::::::::COLISÕES REATIVAS::::::::::::::::::::::
     //Ativado quando player colidir com inimigo/armadilha
     damage() {
         this.physics.pause();
@@ -567,23 +506,9 @@ class Stage extends Phaser.Scene {
         this.weaponButton.setVisible(true);
         this.amunitionBulletText.setVisible(true);
 
-        if(this.isStage3){
-            this.atentionMsg0 = this.add.text(this.game.renderer.width/2, this.game.renderer.height/2, ' Atencao!',{
-                font: '25px emulogic', fill: '#00aa00'
-            }).setOrigin(0.5);
-            this.atentionMsg1 = this.add.text(this.game.renderer.width/2, (this.game.renderer.height/2)+50, ' Voce so pode errar 1 bala',{
-                font: '25px emulogic', fill: '#00aa00'
-            }).setOrigin(0.5);
-
-            this.time.addEvent({delay: 3500, callback: this.destroyMsg, callbackScope: this, loop: false})
-            
+        if (this.isStage3) {
+            this.msgAtentionStage()
         }
-        
-    }
-    //Somente no estágio 3 usada somente pelo metodo getWapon na 3a fase
-    destroyMsg(){
-        this.atentionMsg0.destroy();
-        this.atentionMsg1.destroy()
     }
     //Ao acertar bala no inimigo
     hitShot(bullet, enemy) {
@@ -602,19 +527,9 @@ class Stage extends Phaser.Scene {
 
         this.enemyPosition -= 1;
         //somente para fase 3
+
         if (this.isStage3) {
-            if (this.enemyPosition === 0) {
-                this.sndExplosion.play();
-
-                x = this.tombFinal.x;
-                y = this.tombFinal.y;
-                emitter = this.tombFinalParticle.createEmitter({ maxParticles: 50 });
-                emitter.setPosition(x, y);
-                emitter.setSpeed(50);
-
-                this.tombFinal.disableBody(true);
-                this.tombFinal.setVisible(false)
-            }
+            this.destroyTombFinal()
         }
         this.oneBulletLess(this.weaponButton);
     }
@@ -624,9 +539,8 @@ class Stage extends Phaser.Scene {
         bullet.setActive(true);
         this.oneBulletLess(this.weaponButton);
     }
-
     //Uma bala a menos ao atirar
-    oneBulletLess(button) { 
+    oneBulletLess(button) {
         this.amunitionBullet -= 1;
 
         if (this.amunitionBullet === 1) {
@@ -643,38 +557,10 @@ class Stage extends Phaser.Scene {
         }
 
         //Para informar que tem menos balas que monstros
-        if(this.isStage3){
-            if(this.enemyPosition > this.amunitionBullet){
-                this.player.disableBody(true, true);
-                this.weaponButton.setVisible(false);
-                textGameOverHere = 'Municao insuficientes para esta etapa'
-                
-                this.add.text(this.game.renderer.width/2, this.game.renderer.height/2, ' Menos balas que monstros',
-                {font: '30px emulogic', fill: '#ff0000'}).setOrigin(0.5);
-                this.add.text(this.game.renderer.width/2, (this.game.renderer.height/2)+50, '  encapuzados',
-                {font: '30px emulogic', fill: '#ff0000'}).setOrigin(0.5);
-
-                this.time.addEvent({delay: 3500, callback: this.gameOver, callbackScope: this, loop: false})
-            }
+        if (this.isStage3) {
+            //Na 3a fase você, caso você tenha menos balas que mosntros será decretado fim de jogo
+            this.fewerBulletsThanMonsters()
         }
-    }
-
-    //Ativar botão para desativar armadilhas
-    getLever(player, lever) {
-        lever.disableBody(true, true);
-        this.leverButton.setVisible(true);
-        this.c += 45;
-
-    }
-    //Destruir as tumbas
-    destroyTomb(tomb) {
-        let x = tomb.x;
-        let y = tomb.y;
-        let emitter = this.tombParticle.createEmitter({ maxParticles: 50 });
-        emitter.setPosition(x, y);
-        emitter.setSpeed(50);
-
-        tomb.destroy();
     }
     //game over
     gameOver() {
@@ -682,8 +568,7 @@ class Stage extends Phaser.Scene {
         currentScore = 0
         this.scene.start('gameOver');
     }
-
-    //passou de fase
+    //Passou de fase
     callNextStage() {
         this.desactiveSound();
 
@@ -696,25 +581,17 @@ class Stage extends Phaser.Scene {
         this.Congratulationtext = this.add.text(this.game.renderer.width / 2, 150, 'Parabens!', { font: '35px emulogic', fill: '#ffffff' })
             .setOrigin(0.5);
 
-
+        //:::::::Texto de encerramento de fase
+        //::::::::encerramento do estágio 3
         if (this.isStage3) {
             this.gameObjective.destroy();
-            this.nextStageText = this.add.text((this.game.renderer.width / 2) + 10, 200, 'Voce conseguiu salvar Juliel!', { font: '20px emulogic', fill: '#ffffff' })
-                .setOrigin(0.5);
-            this.ScoreFinalStageText = this.add.text(this.game.renderer.width / 2, 250, 'Pts acumulados: ' + this.score, { font: '20px emulogic', fill: '#ffffff' })
-                .setOrigin(0.5);
-            this.ScoreFinalStageText = this.add.text(this.game.renderer.width / 2, 300, 'Tempo restante: ' + this.c, { font: '20px emulogic', fill: '#ffffff' })
-                .setOrigin(0.5);
-            this.ScoreFinalStageText = this.add.text(this.game.renderer.width / 2, 350, 'Pontuacao Final: ' + currentScore, { font: '20px emulogic', fill: '#ffffff' })
-                .setOrigin(0.5);
+            this.textEndingStage3();
         }
+        //Encerramento para os demais estágios
         else {
+            //eliminar obstáculos do estágio 2
             if (this.isStage2) {
-                let i = 0
-                let j = this.obstacles.getLength();
-                for (i = 0; i < j; i++) {
-                    this.groupObstacle[i].destroy();
-                }
+                this.destroyObstaclesStage();
             }
             this.nextStageText = this.add.text((this.game.renderer.width / 2) + 10, 200, 'Voce avancou para o proximo labirinto', { font: '20px emulogic', fill: '#ffffff' })
                 .setOrigin(0.5);
@@ -736,13 +613,11 @@ class Stage extends Phaser.Scene {
         this.player.disableBody(true, true);
         this.weaponButton.setVisible(false);
     }
-
-    //musica da vitoria
+    //Musica da vitoria
     musicVictory() {
         this.sndVictory.resume();
     }
 
 }
 movimentBullet = 'down';
-
 var textGameOverHere = ''

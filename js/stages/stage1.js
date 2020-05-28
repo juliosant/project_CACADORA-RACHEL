@@ -50,18 +50,22 @@ class Stage1 extends Stage {
         [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ]
 
+    //Métodos ligados ao stage1
+    resetScore(){
+        currentScore = 0
+    }
+
     activeSound(){
         this.sndStage = this.sound.add('sndStage1'); 
         this.sndStage.setVolume(0.5);
         this.sndStage.loop = true;
         this.sndStage.play();
-        this.sndStage.pause();
-        this.sndStage.resume();
+        //this.sndStage.pause();
+        //this.sndStage.resume();
 
     }
     desactiveSound(){
         this.sndStage.stop();
-        //this.sndStage.stop();
     }
     
     callNextScene() {

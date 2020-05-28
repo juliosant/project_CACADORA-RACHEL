@@ -29,8 +29,8 @@ var config = {
         width: 1024,
         height: 525,
     },
-    width: 1024,
-    height: 525,
+    //width: 1024,
+    //height: 525,
     physics: {
         default: 'arcade',
         arcade: {
